@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 6, 2020 4:56:18 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojo.Sinhvien" table="sinhvien" catalog="quanlysinhvien" optimistic-lock="version">
+        <id name="maSv" type="int">
+            <column name="MaSV" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="lophoc" class="pojo.Lophoc" fetch="select">
+            <column name="Lop" not-null="true" />
+        </many-to-one>
+        <property name="mssv" type="string">
+            <column name="MSSV" not-null="true" />
+        </property>
+        <property name="hoTen" type="string">
+            <column name="HoTen" not-null="true" />
+        </property>
+        <property name="gioiTinh" type="string">
+            <column name="GioiTinh" not-null="true" />
+        </property>
+        <property name="cmnd" type="string">
+            <column name="CMND" not-null="true" />
+        </property>
+        <property name="matKhau" type="string">
+            <column name="MatKhau" not-null="true" />
+        </property>
+        <set name="loptheomons" table="loptheomon" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SinhVien" not-null="true" />
+            </key>
+            <one-to-many class="pojo.Loptheomon" />
+        </set>
+        <set name="loptheomons_1" table="loptheomon" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SinhVien" not-null="true" />
+            </key>
+            <one-to-many class="pojo.Loptheomon" />
+        </set>
+    </class>
+</hibernate-mapping>
