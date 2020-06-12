@@ -1,5 +1,5 @@
 package pojo;
-// Generated Jun 6, 2020 4:56:18 PM by Hibernate Tools 4.3.1
+// Generated Jun 12, 2020 11:03:16 PM by Hibernate Tools 4.3.1
 
 
 
@@ -10,34 +10,24 @@ public class Chitietphuckhao  implements java.io.Serializable {
 
 
      private int id;
-     private Monhoc monhoc;
-     private Phuckhao phuckhao;
+     private int maPhucKhao;
      private String mssv;
      private String hoTen;
+     private String mon;
      private String cotDiem;
      private float diemMongMuon;
      private String lyDo;
-     private Integer trangThai;
+     private int trangThai;
 
     public Chitietphuckhao() {
     }
 
-	
-    public Chitietphuckhao(int id, Monhoc monhoc, Phuckhao phuckhao, String mssv, String hoTen, String cotDiem, float diemMongMuon) {
-        this.id = id;
-        this.monhoc = monhoc;
-        this.phuckhao = phuckhao;
-        this.mssv = mssv;
-        this.hoTen = hoTen;
-        this.cotDiem = cotDiem;
-        this.diemMongMuon = diemMongMuon;
-    }
-    public Chitietphuckhao(int id, Monhoc monhoc, Phuckhao phuckhao, String mssv, String hoTen, String cotDiem, float diemMongMuon, String lyDo, Integer trangThai) {
+    public Chitietphuckhao(int id, int maPhucKhao, String mssv, String hoTen, String mon, String cotDiem, float diemMongMuon, String lyDo, int trangThai) {
        this.id = id;
-       this.monhoc = monhoc;
-       this.phuckhao = phuckhao;
+       this.maPhucKhao = maPhucKhao;
        this.mssv = mssv;
        this.hoTen = hoTen;
+       this.mon = mon;
        this.cotDiem = cotDiem;
        this.diemMongMuon = diemMongMuon;
        this.lyDo = lyDo;
@@ -51,19 +41,12 @@ public class Chitietphuckhao  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public Monhoc getMonhoc() {
-        return this.monhoc;
+    public int getMaPhucKhao() {
+        return this.maPhucKhao;
     }
     
-    public void setMonhoc(Monhoc monhoc) {
-        this.monhoc = monhoc;
-    }
-    public Phuckhao getPhuckhao() {
-        return this.phuckhao;
-    }
-    
-    public void setPhuckhao(Phuckhao phuckhao) {
-        this.phuckhao = phuckhao;
+    public void setMaPhucKhao(int maPhucKhao) {
+        this.maPhucKhao = maPhucKhao;
     }
     public String getMssv() {
         return this.mssv;
@@ -78,6 +61,13 @@ public class Chitietphuckhao  implements java.io.Serializable {
     
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
+    }
+    public String getMon() {
+        return this.mon;
+    }
+    
+    public void setMon(String mon) {
+        this.mon = mon;
     }
     public String getCotDiem() {
         return this.cotDiem;
@@ -100,11 +90,11 @@ public class Chitietphuckhao  implements java.io.Serializable {
     public void setLyDo(String lyDo) {
         this.lyDo = lyDo;
     }
-    public Integer getTrangThai() {
+    public int getTrangThai() {
         return this.trangThai;
     }
     
-    public void setTrangThai(Integer trangThai) {
+    public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
 

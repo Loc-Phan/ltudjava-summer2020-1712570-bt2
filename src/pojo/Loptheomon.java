@@ -1,5 +1,5 @@
 package pojo;
-// Generated Jun 6, 2020 4:56:18 PM by Hibernate Tools 4.3.1
+// Generated Jun 12, 2020 11:03:16 PM by Hibernate Tools 4.3.1
 
 
 
@@ -9,11 +9,10 @@ package pojo;
 public class Loptheomon  implements java.io.Serializable {
 
 
-     private int id;
-     private Lophoc lophoc;
-     private Sinhvien sinhvien;
      private String maLopTheoMon;
      private String mon;
+     private String lop;
+     private int sinhVien;
      private float diemGk;
      private float diemCk;
      private float diemKhac;
@@ -22,39 +21,17 @@ public class Loptheomon  implements java.io.Serializable {
     public Loptheomon() {
     }
 
-    public Loptheomon(int id, Lophoc lophoc, Sinhvien sinhvien, String maLopTheoMon, String mon, float diemGk, float diemCk, float diemKhac, float diemTong) {
-       this.id = id;
-       this.lophoc = lophoc;
-       this.sinhvien = sinhvien;
+    public Loptheomon(String maLopTheoMon, String mon, String lop, int sinhVien, float diemGk, float diemCk, float diemKhac, float diemTong) {
        this.maLopTheoMon = maLopTheoMon;
        this.mon = mon;
+       this.lop = lop;
+       this.sinhVien = sinhVien;
        this.diemGk = diemGk;
        this.diemCk = diemCk;
        this.diemKhac = diemKhac;
        this.diemTong = diemTong;
     }
    
-    public int getId() {
-        return this.id;
-    }
-    
-    public void setId(int id) {
-        this.id = id;
-    }
-    public Lophoc getLophoc() {
-        return this.lophoc;
-    }
-    
-    public void setLophoc(Lophoc lophoc) {
-        this.lophoc = lophoc;
-    }
-    public Sinhvien getSinhvien() {
-        return this.sinhvien;
-    }
-    
-    public void setSinhvien(Sinhvien sinhvien) {
-        this.sinhvien = sinhvien;
-    }
     public String getMaLopTheoMon() {
         return this.maLopTheoMon;
     }
@@ -68,6 +45,20 @@ public class Loptheomon  implements java.io.Serializable {
     
     public void setMon(String mon) {
         this.mon = mon;
+    }
+    public String getLop() {
+        return this.lop;
+    }
+    
+    public void setLop(String lop) {
+        this.lop = lop;
+    }
+    public int getSinhVien() {
+        return this.sinhVien;
+    }
+    
+    public void setSinhVien(int sinhVien) {
+        this.sinhVien = sinhVien;
     }
     public float getDiemGk() {
         return this.diemGk;

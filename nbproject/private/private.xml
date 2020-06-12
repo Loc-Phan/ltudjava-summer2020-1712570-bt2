@@ -5,15 +5,13 @@
         <group>
             <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/hibernate.cfg.xml</file>
             <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/form/QuanLySinhVien.java</file>
-            <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/form/QuanLyTKB.java</file>
             <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/hibernate.reveng.xml</file>
             <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/form/Dashboard.java</file>
-            <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/pojo/Lophoc.java</file>
             <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/form/Login.java</file>
-            <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/dao/SinhVienDAO.java</file>
             <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/util/NewHibernateUtil.java</file>
+            <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/dao/SinhVienDAO.java</file>
+            <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/form/ImportSinhVien.java</file>
             <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/test/Main.java</file>
-            <file>file:/D:/Java/Deadline/W4/ltudjava-summer2020-1712570-bt2/src/pojo/Sinhvien.java</file>
         </group>
     </open-files>
 </project-private>

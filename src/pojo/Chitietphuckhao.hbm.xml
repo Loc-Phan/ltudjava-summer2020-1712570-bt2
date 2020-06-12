@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jun 6, 2020 4:56:18 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Jun 12, 2020 11:03:16 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojo.Chitietphuckhao" table="chitietphuckhao" catalog="quanlysinhvien" optimistic-lock="version">
         <id name="id" type="int">
             <column name="ID" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="monhoc" class="pojo.Monhoc" fetch="select">
-            <column name="Mon" not-null="true" />
-        </many-to-one>
-        <many-to-one name="phuckhao" class="pojo.Phuckhao" fetch="select">
+        <property name="maPhucKhao" type="int">
             <column name="MaPhucKhao" not-null="true" />
-        </many-to-one>
+        </property>
         <property name="mssv" type="string">
             <column name="MSSV" not-null="true" />
         </property>
         <property name="hoTen" type="string">
             <column name="HoTen" not-null="true" />
+        </property>
+        <property name="mon" type="string">
+            <column name="Mon" not-null="true" />
         </property>
         <property name="cotDiem" type="string">
             <column name="CotDiem" not-null="true" />
@@ -27,10 +27,10 @@
             <column name="DiemMongMuon" precision="12" scale="0" not-null="true" />
         </property>
         <property name="lyDo" type="string">
-            <column name="LyDo" />
+            <column name="LyDo" not-null="true" />
         </property>
-        <property name="trangThai" type="java.lang.Integer">
-            <column name="TrangThai" />
+        <property name="trangThai" type="int">
+            <column name="TrangThai" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

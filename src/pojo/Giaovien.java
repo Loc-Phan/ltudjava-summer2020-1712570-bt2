@@ -1,5 +1,5 @@
 package pojo;
-// Generated Jun 6, 2020 4:56:18 PM by Hibernate Tools 4.3.1
+// Generated Jun 12, 2020 11:03:16 PM by Hibernate Tools 4.3.1
 
 
 
@@ -20,12 +20,11 @@ public class Giaovien  implements java.io.Serializable {
     }
 
 	
-    public Giaovien(int maGv, String hoTen, String tenDn, String matKhau, String sdt) {
+    public Giaovien(int maGv, String hoTen, String tenDn, String matKhau) {
         this.maGv = maGv;
         this.hoTen = hoTen;
         this.tenDn = tenDn;
         this.matKhau = matKhau;
-        this.sdt = sdt;
     }
     public Giaovien(int maGv, String hoTen, String tenDn, String matKhau, String sdt, String diaChi) {
        this.maGv = maGv;
