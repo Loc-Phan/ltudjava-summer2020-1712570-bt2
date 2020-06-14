@@ -5,8 +5,11 @@
  */
 package form;
 
+import dao.SinhVienDAO;
 import javax.swing.JComboBox;
-
+import form.ImportSinhVien;
+import javax.swing.JOptionPane;
+import pojo.Sinhvien;
 /**
  *
  * @author Chen-Yang
@@ -42,11 +45,11 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         lblCMND1 = new javax.swing.JLabel();
         cbbGioiTinh = new javax.swing.JComboBox<>();
         lblLop = new javax.swing.JLabel();
-        cbbLop = new javax.swing.JComboBox<>();
+        cbbLopThem = new javax.swing.JComboBox<>();
         btnLamMoi = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         lblLop1 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cbbLopSV = new javax.swing.JComboBox<>();
         btnImport = new javax.swing.JButton();
         btnTaiDSSV = new javax.swing.JButton();
 
@@ -79,6 +82,7 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý sinh viên");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setLocation(new java.awt.Point(0, 0));
         setName(""); // NOI18N
 
         lblMSSV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -130,11 +134,11 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         lblLop.setText("Lớp");
         lblLop.setName(""); // NOI18N
 
-        cbbLop.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        cbbLop.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17HCB", "18HCB" }));
-        cbbLop.addActionListener(new java.awt.event.ActionListener() {
+        cbbLopThem.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        cbbLopThem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17HCB", "18HCB" }));
+        cbbLopThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLopActionPerformed(evt);
+                cbbLopThemActionPerformed(evt);
             }
         });
 
@@ -158,11 +162,11 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         lblLop1.setText("Lớp");
         lblLop1.setName(""); // NOI18N
 
-        jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17HCB", "18HCB" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        cbbLopSV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        cbbLopSV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17HCB", "18HCB" }));
+        cbbLopSV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                cbbLopSVActionPerformed(evt);
             }
         });
 
@@ -206,7 +210,7 @@ public class QuanLySinhVien extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblLop, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(cbbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbLopThem, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
@@ -216,7 +220,7 @@ public class QuanLySinhVien extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(lblLop1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbLopSV, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTaiDSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
@@ -241,22 +245,24 @@ public class QuanLySinhVien extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLop, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbLopThem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLop1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbLopSV, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTaiDSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(187, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 844, 496);
+        setSize(new java.awt.Dimension(844, 496));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtMSSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMSSVActionPerformed
+       
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMSSVActionPerformed
 
@@ -274,23 +280,45 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cbbGioiTinhActionPerformed
 
-    private void cbbLopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLopActionPerformed
+    private void cbbLopThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLopThemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbbLopActionPerformed
+    }//GEN-LAST:event_cbbLopThemActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        Sinhvien sv = new Sinhvien();
+        if(txtMSSV.getText().equals("") || txtHoTen.getText().equals("") || txtCMND.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane,"Bạn cần nhập đầy đủ thông tin");
+        }
+        else if(txtMSSV.getText()!="" && txtHoTen.getText()!="" && txtCMND.getText()!="") {
+            sv.setMssv(txtMSSV.getText());
+            sv.setHoTen(txtHoTen.getText());
+            String gioiTinh = (String) cbbGioiTinh.getSelectedItem();
+            sv.setGioiTinh(gioiTinh);
+            sv.setCmnd(txtCMND.getText());
+            sv.setMatKhau(txtMSSV.getText());
+            String lop = (String) cbbLopThem.getSelectedItem();
+            sv.setLop(lop);
+            if(SinhVienDAO.themSinhVien(sv)==true) {
+                JOptionPane.showMessageDialog(rootPane,"Thêm sinh viên "+ txtHoTen.getText() + " thành công!");
+            }
+            else {
+                JOptionPane.showMessageDialog(rootPane,"MSSV: " + txtMSSV.getText() + " này đã tồn tại!");
+            } 
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void cbbLopSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLopSVActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_cbbLopSVActionPerformed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        ImportSinhVien importSV = new ImportSinhVien();
+        importSV.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImportActionPerformed
 
@@ -335,8 +363,8 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     private javax.swing.JButton btnTaiDSSV;
     private javax.swing.JButton btnThem;
     private javax.swing.JComboBox<String> cbbGioiTinh;
-    private javax.swing.JComboBox<String> cbbLop;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> cbbLopSV;
+    private javax.swing.JComboBox<String> cbbLopThem;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

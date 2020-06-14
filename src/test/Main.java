@@ -14,8 +14,8 @@ import dao.SinhVienDAO;
  */
 public class Main {
     public static void main(String args[]) {
-        String path = "data/17HCB.csv";
-        SinhVienDAO.themDanhSachSinhVien(path);
+        //String path = "data/17HCB.csv";
+        //SinhVienDAO.themDanhSachSinhVien(path);
         
         
 //        Sinhvien sv = new Sinhvien();

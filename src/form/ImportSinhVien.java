@@ -7,17 +7,23 @@ package form;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import dao.SinhVienDAO;
+import java.awt.Font;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  *
  * @author Chen-Yang
  */
-public class ImportSinhVien extends javax.swing.JFrame {
+public class ImportSinhVien extends javax.swing.JFrame  {
     private String filePath;
     /**
      * Creates new form ImportSinhVien
      */
-    public ImportSinhVien() {
+    public ImportSinhVien()  {
         initComponents();
     }
 
@@ -31,10 +37,10 @@ public class ImportSinhVien extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        lblImport = new javax.swing.JLabel();
         txtImport = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnChonFile = new javax.swing.JButton();
+        btnImport = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -42,10 +48,10 @@ public class ImportSinhVien extends javax.swing.JFrame {
         setTitle("Import Sinh Viên");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("IMPORT SINH VIÊN");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 343, 31));
+        lblImport.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblImport.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImport.setText("IMPORT SINH VIÊN");
+        getContentPane().add(lblImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 343, 31));
 
         txtImport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txtImport.addActionListener(new java.awt.event.ActionListener() {
@@ -55,49 +61,61 @@ public class ImportSinhVien extends javax.swing.JFrame {
         });
         getContentPane().add(txtImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 397, 33));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Chọn file");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnChonFile.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnChonFile.setText("Chọn file");
+        btnChonFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnChonFileActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 116, 35));
+        getContentPane().add(btnChonFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 116, 35));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton2.setText("Import");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnImport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnImport.setText("Import");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnImportActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 92, -1));
+        getContentPane().add(btnImport, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 92, -1));
 
-        setBounds(0, 0, 683, 225);
+        setSize(new java.awt.Dimension(683, 225));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnChonFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonFileActionPerformed
         JFileChooser c = new JFileChooser();
         int rVal = c.showOpenDialog(null);
         if (rVal == JFileChooser.APPROVE_OPTION) {
         String filename = c.getSelectedFile().getName();
         String dir = c.getCurrentDirectory().toString();
         filePath = dir+"\\"+filename;
-        
+        txtImport.setText(filePath);
  }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnChonFileActionPerformed
 
     private void txtImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImportActionPerformed
         JOptionPane.showConfirmDialog(rootPane, filePath);
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImportActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-        System.exit(0);
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        if(filePath==null) {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn file");
+        }
+        else {
+            try {
+                if(SinhVienDAO.themDanhSachSinhVien(filePath)==true) {
+                    JOptionPane.showMessageDialog(rootPane, "Import danh sách lớp thành công");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ImportSinhVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.exit(0); 
+        }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnImportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,10 +153,10 @@ public class ImportSinhVien extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnChonFile;
+    private javax.swing.JButton btnImport;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblImport;
     private javax.swing.JTextField txtImport;
     // End of variables declaration//GEN-END:variables
 }

@@ -161,6 +161,9 @@ public class SinhVienDAO {
     }
     public static boolean themDanhSachSinhVien(String path) throws IOException {
         List<Sinhvien> ds  = DocCSV(path);
+        if(ds.size()==0) {
+            return false;
+        }
         for(int i=0;i<ds.size();i++) {
             SinhVienDAO.themSinhVien(ds.get(i));
         }
