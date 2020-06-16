@@ -5,25 +5,38 @@
  */
 package form;
 
+import dao.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import pojo.*;
 
 /**
  *
  * @author Chen-Yang
  */
 public class QuanLyTKB extends javax.swing.JFrame {
-
-    
+    private ArrayList<Monhoc> ds;
+    DefaultTableModel model;
+    private String filePath;
    
     /**
      * Creates new form QuanLyTKB
      */
     public QuanLyTKB() {
         initComponents();
-
+        ds = (ArrayList<Monhoc>) ThoiKhoaBieuDAO.layDachSachTKB();
+        model = (DefaultTableModel) tbeTKB.getModel();
+        model.setColumnIdentifiers(new Object[] {
+            "STT","Mã môn","Tên môn","Phòng học"
+        });
     }
 
     /**
@@ -35,29 +48,68 @@ public class QuanLyTKB extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        lblImport = new javax.swing.JLabel();
+        txtImport = new javax.swing.JTextField();
+        btnChonFile = new javax.swing.JButton();
+        btnImportTKB = new javax.swing.JButton();
+        lblLop = new javax.swing.JLabel();
+        cbbLop = new javax.swing.JComboBox<>();
+        btnTai = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbeTKB = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý Thời Khóa Biểu");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel1.setText("IMPORT THỜI KHÓA BIỂU");
+        lblImport.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblImport.setText("IMPORT THỜI KHÓA BIỂU");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Chọn file");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtImport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtImportActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton2.setText("Import Thời khóa biểu");
+        btnChonFile.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnChonFile.setText("Chọn file");
+        btnChonFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChonFileActionPerformed(evt);
+            }
+        });
+
+        btnImportTKB.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnImportTKB.setText("Import Thời khóa biểu");
+        btnImportTKB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportTKBActionPerformed(evt);
+            }
+        });
+
+        lblLop.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblLop.setText("Lớp");
+
+        cbbLop.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        cbbLop.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17HCB", "18HCB" }));
+
+        btnTai.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnTai.setText("Tải thời khóa biểu");
+        btnTai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaiActionPerformed(evt);
+            }
+        });
+
+        tbeTKB.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tbeTKB);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,40 +117,113 @@ public class QuanLyTKB extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblImport, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lblLop, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbbLop, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtImport, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnChonFile)
+                                .addGap(58, 58, 58)
+                                .addComponent(btnImportTKB, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(btnTai, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
-                .addContainerGap(319, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnChonFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnImportTKB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtImport))
+                .addGap(69, 69, 69)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLop, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbLop)
+                    .addComponent(btnTai))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnChonFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonFileActionPerformed
+        JFileChooser c = new JFileChooser();
+        int rVal = c.showOpenDialog(null);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            String filename = c.getSelectedFile().getName();
+            String dir = c.getCurrentDirectory().toString();
+            filePath = dir+"\\"+filename; 
+            txtImport.setText(filePath);
+        }
         // TODO add your handling code here:
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnChonFileActionPerformed
 
+    private void txtImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImportActionPerformed
+        JOptionPane.showConfirmDialog(rootPane, filePath);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtImportActionPerformed
+
+    private void btnImportTKBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportTKBActionPerformed
+        if(filePath==null) {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn file");
+        }
+        else {
+            try {
+                if(ThoiKhoaBieuDAO.themDanhSachTKB(filePath)==true) {
+                    JOptionPane.showMessageDialog(rootPane, "Import thời khóa biểu thành công");
+                    //DiemDAO.themDanhSachLopTheoMon();
+                }
+                else if(ThoiKhoaBieuDAO.themDanhSachTKB(filePath)==false) {
+                    JOptionPane.showMessageDialog(rootPane, "Thời khóa biểu này đã tồn tại");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(QuanLyTKB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //System.exit(0); 
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImportTKBActionPerformed
+
+    private void btnTaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiActionPerformed
+        showResult();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTaiActionPerformed
+    public void showResult() {
+        String lop = (String) cbbLop.getSelectedItem();
+        
+        int j;
+        for(int i=0;i<ds.size();i++) {
+            Monhoc mh = ds.get(i);
+            if(lop.compareTo(mh.getLop())==0) {
+                j=i+1;
+                model.addRow(new Object[] {
+                    j++,mh.getMaMon(),mh.getTenMon(),mh.getPhongHoc()
+                });
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -135,9 +260,14 @@ public class QuanLyTKB extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton btnChonFile;
+    private javax.swing.JButton btnImportTKB;
+    private javax.swing.JButton btnTai;
+    private javax.swing.JComboBox<String> cbbLop;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblImport;
+    private javax.swing.JLabel lblLop;
+    private javax.swing.JTable tbeTKB;
+    private javax.swing.JTextField txtImport;
     // End of variables declaration//GEN-END:variables
 }

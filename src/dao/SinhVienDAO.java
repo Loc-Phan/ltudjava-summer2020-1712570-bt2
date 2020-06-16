@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import org.hibernate.Session;
 
 public class SinhVienDAO {
-    public static List<Sinhvien> DocCSV(String path) throws IOException 
+    public static List<Sinhvien> DocDSSV(String path) throws IOException 
     {
         ArrayList ds = new ArrayList<Sinhvien>();
         FileInputStream fis = null;
@@ -32,11 +32,18 @@ public class SinhVienDAO {
             fis = new FileInputStream(path);
             isr = new InputStreamReader(fis);
             br = new BufferedReader(isr);
+            int brr = br.read();
             String line = br.readLine();
             String[] lopHoc_ = line.split(",");
             String lopHoc = lopHoc_[0];
             
-            line = br.readLine(); // bo qua dong dau chua thong tin
+            Lophoc lh = new Lophoc();
+            lh.setMaLop(lopHoc);
+            lh.setTenLop(lopHoc);
+            lh.setLaLopHoc(1);
+            SinhVienDAO.themLopHoc(lh);
+            
+            line = br.readLine(); // bo qua dong chua thong tin
             line = br.readLine(); 
             while(line!=null) {
                 String[] arr=line.split(",");
@@ -63,13 +70,13 @@ public class SinhVienDAO {
         }  
         return ds;      
     }
-                    
+         
     public static List<Sinhvien> layDachSachSinhVien() {
         List<Sinhvien> ds = null;
         Session session = null;
         session = NewHibernateUtil.getSessionFactory().openSession();
         try {
-            String hql = "select sv from Hocsinh sv";
+            String hql = "select sv from Sinhvien sv";
             Query query = session.createQuery(hql);
             ds = query.list();
         } catch (HibernateException ex) {
@@ -79,6 +86,7 @@ public class SinhVienDAO {
         }  
             return ds;
     }
+   
     public static List<Lophoc> layDachSachLop() {
         List<Lophoc> lh = null;
         Session session = null;
@@ -108,6 +116,8 @@ public class SinhVienDAO {
         }
         return sv;
     }
+    
+    
     public static boolean themSinhVien(Sinhvien sv) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         if (SinhVienDAO.layThongTinSinhVien(sv.getMssv())!= null) {
@@ -127,6 +137,7 @@ public class SinhVienDAO {
         }
         return true;
     }
+    
     public static Lophoc layThongTinLopHoc(String malop) {
         Lophoc lh = null;
         Session session = NewHibernateUtil.getSessionFactory().openSession();
@@ -160,13 +171,15 @@ public class SinhVienDAO {
         return true;
     }
     public static boolean themDanhSachSinhVien(String path) throws IOException {
-        List<Sinhvien> ds  = DocCSV(path);
+        List<Sinhvien> ds  = DocDSSV(path);
         if(ds.size()==0) {
             return false;
         }
         for(int i=0;i<ds.size();i++) {
             SinhVienDAO.themSinhVien(ds.get(i));
         }
+        
         return true;
     }
+    
 }

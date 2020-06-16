@@ -5,22 +5,30 @@
  */
 package form;
 
-import dao.SinhVienDAO;
+import dao.*;
 import javax.swing.JComboBox;
 import form.ImportSinhVien;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import pojo.Sinhvien;
 /**
  *
  * @author Chen-Yang
  */
 public class QuanLySinhVien extends javax.swing.JFrame {
-
+    private ArrayList<Sinhvien> ds;
+    DefaultTableModel model;
     /**
      * Creates new form QuanLySinhVien
      */
     public QuanLySinhVien() {
         initComponents();
+        ds = (ArrayList<Sinhvien>) SinhVienDAO.layDachSachSinhVien();
+        model = (DefaultTableModel) tbeSinhVien.getModel();
+        model.setColumnIdentifiers(new Object[] {
+            "STT","MSSV","Họ tên","Giới tính","CMND"
+        });
     }
 
     /**
@@ -36,6 +44,8 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
         lblMSSV = new javax.swing.JLabel();
         txtMSSV = new javax.swing.JTextField();
         lblHoTen = new javax.swing.JLabel();
@@ -52,6 +62,8 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         cbbLopSV = new javax.swing.JComboBox<>();
         btnImport = new javax.swing.JButton();
         btnTaiDSSV = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbeSinhVien = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,6 +90,19 @@ public class QuanLySinhVien extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(jTable2);
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý sinh viên");
@@ -180,6 +205,21 @@ public class QuanLySinhVien extends javax.swing.JFrame {
 
         btnTaiDSSV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnTaiDSSV.setText("Tải danh sách SV");
+        btnTaiDSSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaiDSSVActionPerformed(evt);
+            }
+        });
+
+        tbeSinhVien.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(tbeSinhVien);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,6 +266,10 @@ public class QuanLySinhVien extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 781, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,10 +298,12 @@ public class QuanLySinhVien extends javax.swing.JFrame {
                     .addComponent(cbbLopSV, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTaiDSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(844, 496));
+        setSize(new java.awt.Dimension(844, 553));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -285,6 +331,9 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbLopThemActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        txtMSSV.setText("");
+        txtHoTen.setText("");
+        txtCMND.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
@@ -322,6 +371,26 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImportActionPerformed
 
+    private void btnTaiDSSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiDSSVActionPerformed
+        
+        showResult();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTaiDSSVActionPerformed
+    
+    public void showResult() {
+        String lop = (String) cbbLopSV.getSelectedItem();
+        
+        int j;
+        for(int i=0;i<ds.size();i++) {
+            Sinhvien sv = ds.get(i);
+            if(lop.compareTo(sv.getLop())==0) {
+                j=i+1;
+                model.addRow(new Object[] {
+                    j++,sv.getMssv(),sv.getHoTen(),sv.getGioiTinh(),sv.getCmnd()
+                });
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -367,14 +436,18 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbbLopThem;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lblCMND1;
     private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblHoTen;
     private javax.swing.JLabel lblLop;
     private javax.swing.JLabel lblLop1;
     private javax.swing.JLabel lblMSSV;
+    private javax.swing.JTable tbeSinhVien;
     private javax.swing.JTextField txtCMND;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtMSSV;

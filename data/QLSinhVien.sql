@@ -14,7 +14,7 @@ CREATE TABLE monhoc(
 	MaMon varchar(255) NOT NULL primary key,
     TenMon varchar(255) NOT NULL,
     PhongHoc varchar(255) NOT NULL,
-    Lop int(12) not null
+    Lop varchar(255) NOT NULL
 );
 
 CREATE TABLE sinhvien(
@@ -23,21 +23,22 @@ CREATE TABLE sinhvien(
     GioiTinh varchar(255) not null,
     CMND varchar(255) not null,
     MatKhau varchar(255) NOT NULL,
-	Lop int(12) not null,
+	Lop varchar(255) NOT NULL,
     constraint sinhvien_pk primary key (MSSV)
 );
 
 CREATE TABLE lophoc(
-	MaLop int(12) NOT NULL primary key,
+	MaLop varchar(255) NOT NULL primary key,
     TenLop varchar(255) not null,
     LaLopHoc int(1) not null
 );
 
 CREATE TABLE loptheomon(
-    MaLopTheoMon varchar(255) NOT NULL primary key,
+	ID int not null primary key,
+    MaLopTheoMon varchar(255) NOT NULL,
     Mon varchar(255) NOT NULL,
-    Lop int(12) NOT NULL,
-    SinhVien int(12) NOT NULL,
+    Lop varchar(255) NOT NULL,
+    SinhVien varchar(255) NOT NULL,
     DiemGK float NOT NULL,
     DiemCK float NOT NULL,
     DiemKhac float NOT NULL,

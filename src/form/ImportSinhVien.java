@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import pojo.*;
 
 /**
  *
@@ -87,11 +88,11 @@ public class ImportSinhVien extends javax.swing.JFrame  {
         JFileChooser c = new JFileChooser();
         int rVal = c.showOpenDialog(null);
         if (rVal == JFileChooser.APPROVE_OPTION) {
-        String filename = c.getSelectedFile().getName();
-        String dir = c.getCurrentDirectory().toString();
-        filePath = dir+"\\"+filename;
-        txtImport.setText(filePath);
- }
+            String filename = c.getSelectedFile().getName();
+            String dir = c.getCurrentDirectory().toString();
+            filePath = dir+"\\"+filename;
+            txtImport.setText(filePath);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnChonFileActionPerformed
 
@@ -107,12 +108,14 @@ public class ImportSinhVien extends javax.swing.JFrame  {
         else {
             try {
                 if(SinhVienDAO.themDanhSachSinhVien(filePath)==true) {
+                    
+                    
                     JOptionPane.showMessageDialog(rootPane, "Import danh sách lớp thành công");
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ImportSinhVien.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.exit(0); 
+            //System.exit(0); 
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImportActionPerformed

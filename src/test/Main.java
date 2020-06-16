@@ -5,58 +5,50 @@
  */
 package test;
 
+import dao.DiemDAO;
 import java.util.List;
 import pojo.*;
 import dao.SinhVienDAO;
+import dao.ThoiKhoaBieuDAO;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 /**
  *
  * @author Chen-Yang
  */
 public class Main {
-    public static void main(String args[]) {
-        //String path = "data/17HCB.csv";
-        //SinhVienDAO.themDanhSachSinhVien(path);
+    public static void main(String args[]) throws FileNotFoundException, IOException {
+        List<Sinhvien> dsSinhVien = SinhVienDAO.layDachSachSinhVien();
+        List<Lophoc> dsLop = SinhVienDAO.layDachSachLop();
+        List<Monhoc> dsMonHoc = ThoiKhoaBieuDAO.layDachSachTKB();
+        int id=1;
+        for(int i=0;i<dsLop.size();i++) {
+            for(int j=0;j<dsMonHoc.size();j++) {
+                if(dsMonHoc.get(j).getLop().compareTo(dsLop.get(i).getMaLop())==0) {
+                    
+                    for(int k=0;k<dsSinhVien.size();k++) {
+                        Loptheomon ltm = new Loptheomon();
+                        if(dsSinhVien.get(k).getLop().compareTo(dsMonHoc.get(j).getLop())==0) {
+                            ltm.setId(id++);
+                            ltm.setMaLopTheoMon(dsMonHoc.get(j).getLop()+"-"+dsMonHoc.get(j).getMaMon());
+                            ltm.setMon(dsMonHoc.get(j).getMaMon());
+                            ltm.setLop(dsLop.get(i).getMaLop());
+                            ltm.setSinhVien(dsSinhVien.get(k).getMssv());
+                            ltm.setDiemGk(0);
+                            ltm.setDiemCk(0);
+                            ltm.setDiemKhac(0);
+                            ltm.setDiemTong(0);
+                            DiemDAO.themLopTheoMon(ltm);
+                        }
+                    }
+                }
+            }
         
+        }
         
-//        Sinhvien sv = new Sinhvien();
-//        sv.setMaSv(1);
-//        sv.setMssv("1742001");
-//        sv.setHoTen("Nguyễn Văn A");
-//        sv.setGioiTinh("Nam");
-//        sv.setCmnd("123456789");
-//        sv.setMatKhau("1742001");
-//        Lophoc lh = new Lophoc();
-//        lh.setMaLop(1);
-//        lh.setTenLop("17HCB");
-//        lh.setLaLopHoc(1);
-//        SinhVienDAO.themLopHoc(lh);
-//        sv.setLophoc(lh);
-//        boolean kq = SinhVienDAO.themSinhVien(sv);
-//        if(kq=true) {
-//            System.out.println("Them thanh cong");
-//        }
-//        else {
-//            System.out.println("Them that bai");
-//        }
-//        Sinhvien sv_ = SinhVienDAO.layThongTinSinhVien(1);
-//        if(sv_!=null) {
-//                
-//                
-//                System.out.println("MaSV: "  + sv_.getMaSv());
-//                System.out.println("MSSV: " + sv_.getMssv());
-//                System.out.println("Ho ten: " + sv_.getHoTen());
-//                System.out.println("Gioi tinh: " + sv_.getGioiTinh());
-//                System.out.println("CMND: " + sv_.getCmnd());
-//        }
-//        else {
-//            System.out.println("Sinh viên 1742001 không tồn tại");
-//        }
-//        List<Sinhvien> ds = SinhVienDAO.layDachSachSinhVien();
-//        for(int i=0;i<ds.size();i++) {
-//            Sinhvien sv = ds.get(i);
-//            System.out.println("MaSV: " + sv.getMaSv());
-//            System.out.println("MSSV: " + sv.getMssv());
-//        }
-
     }
+
 }
