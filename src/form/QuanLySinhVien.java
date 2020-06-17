@@ -11,7 +11,7 @@ import form.ImportSinhVien;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import pojo.Sinhvien;
+import pojo.*;
 /**
  *
  * @author Chen-Yang
@@ -24,6 +24,7 @@ public class QuanLySinhVien extends javax.swing.JFrame {
      */
     public QuanLySinhVien() {
         initComponents();
+        setDefaultCloseOperation(ImportSinhVien.DISPOSE_ON_CLOSE);
         ds = (ArrayList<Sinhvien>) SinhVienDAO.layDachSachSinhVien();
         model = (DefaultTableModel) tbeSinhVien.getModel();
         model.setColumnIdentifiers(new Object[] {
@@ -350,7 +351,12 @@ public class QuanLySinhVien extends javax.swing.JFrame {
             sv.setCmnd(txtCMND.getText());
             sv.setMatKhau(txtMSSV.getText());
             String lop = (String) cbbLopThem.getSelectedItem();
-            sv.setLop(lop);
+            Lophoc lh = new Lophoc();
+            lh.setMaLop(lop);
+            lh.setTenLop(lop);
+            lh.setLaLopHoc(1);
+            SinhVienDAO.themLopHoc(lh);
+            sv.setLophoc(lh);
             if(SinhVienDAO.themSinhVien(sv)==true) {
                 JOptionPane.showMessageDialog(rootPane,"Thêm sinh viên "+ txtHoTen.getText() + " thành công!");
             }
@@ -366,8 +372,10 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbLopSVActionPerformed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        
         ImportSinhVien importSV = new ImportSinhVien();
         importSV.setVisible(true);
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImportActionPerformed
 
@@ -383,7 +391,7 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         int j;
         for(int i=0;i<ds.size();i++) {
             Sinhvien sv = ds.get(i);
-            if(lop.compareTo(sv.getLop())==0) {
+            if(lop.compareTo(sv.getLophoc().getMaLop())==0) {
                 j=i+1;
                 model.addRow(new Object[] {
                     j++,sv.getMssv(),sv.getHoTen(),sv.getGioiTinh(),sv.getCmnd()

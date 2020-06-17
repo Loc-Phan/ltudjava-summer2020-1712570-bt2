@@ -5,6 +5,8 @@
  */
 package test;
 
+import dao.Account;
+import dao.AccountDAO;
 import dao.DiemDAO;
 import java.util.List;
 import pojo.*;
@@ -21,33 +23,14 @@ import java.io.InputStreamReader;
  */
 public class Main {
     public static void main(String args[]) throws FileNotFoundException, IOException {
-        List<Sinhvien> dsSinhVien = SinhVienDAO.layDachSachSinhVien();
-        List<Lophoc> dsLop = SinhVienDAO.layDachSachLop();
-        List<Monhoc> dsMonHoc = ThoiKhoaBieuDAO.layDachSachTKB();
-        int id=1;
-        for(int i=0;i<dsLop.size();i++) {
-            for(int j=0;j<dsMonHoc.size();j++) {
-                if(dsMonHoc.get(j).getLop().compareTo(dsLop.get(i).getMaLop())==0) {
-                    
-                    for(int k=0;k<dsSinhVien.size();k++) {
-                        Loptheomon ltm = new Loptheomon();
-                        if(dsSinhVien.get(k).getLop().compareTo(dsMonHoc.get(j).getLop())==0) {
-                            ltm.setId(id++);
-                            ltm.setMaLopTheoMon(dsMonHoc.get(j).getLop()+"-"+dsMonHoc.get(j).getMaMon());
-                            ltm.setMon(dsMonHoc.get(j).getMaMon());
-                            ltm.setLop(dsLop.get(i).getMaLop());
-                            ltm.setSinhVien(dsSinhVien.get(k).getMssv());
-                            ltm.setDiemGk(0);
-                            ltm.setDiemCk(0);
-                            ltm.setDiemKhac(0);
-                            ltm.setDiemTong(0);
-                            DiemDAO.themLopTheoMon(ltm);
-                        }
-                    }
-                }
+        String path = "data/svAccount.csv";
+        List<Account> ds = AccountDAO.DocAccount(path);
+        for(int i=0;i<ds.size();i++) {
+            if(ds.get(i).getTenDN().compareTo("1742002")==0) {
+                ds.get(i).setMatKhau("doimatkhau");
             }
-        
         }
+        boolean kq = AccountDAO.GhiAccount(path, ds);
         
     }
 

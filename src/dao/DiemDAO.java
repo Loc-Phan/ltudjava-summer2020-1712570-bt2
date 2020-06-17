@@ -85,16 +85,16 @@ public class DiemDAO {
         List<Monhoc> dsMonHoc = ThoiKhoaBieuDAO.layDachSachTKB();
         for(int i=0;i<dsLop.size();i++) {
             for(int j=0;j<dsMonHoc.size();j++) {
-                if(dsLop.get(i).getMaLop()==dsMonHoc.get(j).getLop()) {
+                if(dsLop.get(i).getMaLop()==dsMonHoc.get(j).getLophoc().getMaLop()) {
                     int id=1;
                     for(int k=0;k<dsSinhVien.size();k++) {
                         Loptheomon ltm = new Loptheomon();
-                        if(dsSinhVien.get(k).getLop()==dsLop.get(i).getMaLop()) {
+                        if(dsSinhVien.get(k).getLophoc().getMaLop()==dsLop.get(i).getMaLop()) {
                             ltm.setId(id++);
                             ltm.setMaLopTheoMon(dsLop.get(i).getMaLop()+"-"+dsMonHoc.get(j).getMaMon());
-                            ltm.setMon(dsMonHoc.get(j).getMaMon());
-                            ltm.setLop(dsLop.get(i).getMaLop());
-                            ltm.setSinhVien(dsSinhVien.get(k).getMssv());
+//                            ltm.setMonHoc(dsMonHoc.get(j).getMaMon());
+//                            ltm.setLop(dsLop.get(i).getMaLop());
+//                            ltm.setSinhVien(dsSinhVien.get(k).getMssv());
                             ltm.setDiemGk(0);
                             ltm.setDiemCk(0);
                             ltm.setDiemKhac(0);

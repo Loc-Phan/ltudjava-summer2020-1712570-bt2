@@ -54,7 +54,7 @@ public class SinhVienDAO {
                 sv.setGioiTinh(arr[3]);
                 sv.setCmnd(arr[4]);
                 sv.setMatKhau(arr[1]);
-                sv.setLop(lopHoc);
+                sv.setLophoc(lh);
                 ds.add(sv);
                 line = br.readLine();
             }

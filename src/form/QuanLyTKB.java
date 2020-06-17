@@ -32,6 +32,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
      */
     public QuanLyTKB() {
         initComponents();
+        setDefaultCloseOperation(QuanLyTKB.DISPOSE_ON_CLOSE);
         ds = (ArrayList<Monhoc>) ThoiKhoaBieuDAO.layDachSachTKB();
         model = (DefaultTableModel) tbeTKB.getModel();
         model.setColumnIdentifiers(new Object[] {
@@ -216,7 +217,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
         int j;
         for(int i=0;i<ds.size();i++) {
             Monhoc mh = ds.get(i);
-            if(lop.compareTo(mh.getLop())==0) {
+            if(lop.compareTo(mh.getLophoc().getMaLop())==0) {
                 j=i+1;
                 model.addRow(new Object[] {
                     j++,mh.getMaMon(),mh.getTenMon(),mh.getPhongHoc()

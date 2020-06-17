@@ -5,6 +5,17 @@
  */
 package form;
 
+import dao.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import pojo.Lophoc;
+import pojo.Sinhvien;
+
 /**
  *
  * @author Chen-Yang
@@ -16,6 +27,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        //setDefaultCloseOperation(Login.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -30,9 +42,9 @@ public class Login extends javax.swing.JFrame {
         lblDangNhap = new javax.swing.JLabel();
         lblMatKhau = new javax.swing.JLabel();
         lblTenDangNhap = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtTenDN = new javax.swing.JTextField();
         txtMatKhau = new javax.swing.JPasswordField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        cbxGV = new javax.swing.JCheckBox();
         btnDangNhap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,23 +65,74 @@ public class Login extends javax.swing.JFrame {
         lblTenDangNhap.setText("Tên đăng nhập");
         getContentPane().add(lblTenDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 74, 115, 29));
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 74, 215, 29));
+        txtTenDN.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        getContentPane().add(txtTenDN, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 74, 215, 30));
 
         txtMatKhau.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 140, 213, 29));
+        getContentPane().add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 140, 213, 30));
 
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jCheckBox1.setText("Là giáo viên");
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 201, -1, -1));
+        cbxGV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        cbxGV.setText("Là giáo viên");
+        getContentPane().add(cbxGV, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 201, -1, -1));
 
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnDangNhap.setText("ĐĂNG NHẬP");
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangNhapActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 248, 133, 34));
 
         setSize(new java.awt.Dimension(463, 380));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        String path="";
+        Account acc = new Account();
+        List<Account> dsAcc;
+        acc.setTenDN(txtTenDN.getText());
+        acc.setMatKhau(txtMatKhau.getText());
+        if(txtTenDN.getText().equals("") || txtMatKhau.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane,"Bạn cần nhập đầy đủ thông tin");
+        }
+        else if(txtTenDN.getText()!="" && txtMatKhau.getText()!="") {
+            if(cbxGV.isSelected()) {
+                path = "data/gvAccount.csv";
+                try {
+                    dsAcc =  AccountDAO.DocAccount(path);
+                    if(AccountDAO.Search(acc, dsAcc)==true) {
+                        Dashboard db = new Dashboard();
+                        db.setVisible(true);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(rootPane,"Tên đăng nhập hoặc mật khẩu không đúng!");
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            }
+            else {
+                path = "data/svAccount.csv";
+                try {
+                    dsAcc =  AccountDAO.DocAccount(path);
+                    if(AccountDAO.Search(acc, dsAcc)==true) {
+                        Dashboard db = new Dashboard();
+                        db.setVisible(true);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(rootPane,"Tên đăng nhập hoặc mật khẩu không đúng!");
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,11 +171,11 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JCheckBox cbxGV;
     private javax.swing.JLabel lblDangNhap;
     private javax.swing.JLabel lblMatKhau;
     private javax.swing.JLabel lblTenDangNhap;
     private javax.swing.JPasswordField txtMatKhau;
+    private javax.swing.JTextField txtTenDN;
     // End of variables declaration//GEN-END:variables
 }

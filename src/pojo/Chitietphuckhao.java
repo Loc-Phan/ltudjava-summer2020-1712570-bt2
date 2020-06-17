@@ -1,5 +1,5 @@
 package pojo;
-// Generated Jun 16, 2020 6:34:21 PM by Hibernate Tools 4.3.1
+// Generated Jun 17, 2020 9:20:06 PM by Hibernate Tools 4.3.1
 
 
 
@@ -10,10 +10,10 @@ public class Chitietphuckhao  implements java.io.Serializable {
 
 
      private int id;
-     private int maPhucKhao;
+     private Monhoc monhoc;
+     private Phuckhao phuckhao;
      private String mssv;
      private String hoTen;
-     private String mon;
      private String cotDiem;
      private float diemMongMuon;
      private String lyDo;
@@ -22,12 +22,12 @@ public class Chitietphuckhao  implements java.io.Serializable {
     public Chitietphuckhao() {
     }
 
-    public Chitietphuckhao(int id, int maPhucKhao, String mssv, String hoTen, String mon, String cotDiem, float diemMongMuon, String lyDo, int trangThai) {
+    public Chitietphuckhao(int id, Monhoc monhoc, Phuckhao phuckhao, String mssv, String hoTen, String cotDiem, float diemMongMuon, String lyDo, int trangThai) {
        this.id = id;
-       this.maPhucKhao = maPhucKhao;
+       this.monhoc = monhoc;
+       this.phuckhao = phuckhao;
        this.mssv = mssv;
        this.hoTen = hoTen;
-       this.mon = mon;
        this.cotDiem = cotDiem;
        this.diemMongMuon = diemMongMuon;
        this.lyDo = lyDo;
@@ -41,12 +41,19 @@ public class Chitietphuckhao  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public int getMaPhucKhao() {
-        return this.maPhucKhao;
+    public Monhoc getMonhoc() {
+        return this.monhoc;
     }
     
-    public void setMaPhucKhao(int maPhucKhao) {
-        this.maPhucKhao = maPhucKhao;
+    public void setMonhoc(Monhoc monhoc) {
+        this.monhoc = monhoc;
+    }
+    public Phuckhao getPhuckhao() {
+        return this.phuckhao;
+    }
+    
+    public void setPhuckhao(Phuckhao phuckhao) {
+        this.phuckhao = phuckhao;
     }
     public String getMssv() {
         return this.mssv;
@@ -61,13 +68,6 @@ public class Chitietphuckhao  implements java.io.Serializable {
     
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
-    }
-    public String getMon() {
-        return this.mon;
-    }
-    
-    public void setMon(String mon) {
-        this.mon = mon;
     }
     public String getCotDiem() {
         return this.cotDiem;

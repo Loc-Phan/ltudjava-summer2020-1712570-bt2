@@ -26,6 +26,7 @@ public class ImportSinhVien extends javax.swing.JFrame  {
      */
     public ImportSinhVien()  {
         initComponents();
+        setDefaultCloseOperation(ImportSinhVien.DISPOSE_ON_CLOSE);
     }
 
     /**
