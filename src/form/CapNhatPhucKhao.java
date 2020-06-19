@@ -16,6 +16,7 @@ public class CapNhatPhucKhao extends javax.swing.JFrame {
      */
     public CapNhatPhucKhao() {
         initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
 
     /**

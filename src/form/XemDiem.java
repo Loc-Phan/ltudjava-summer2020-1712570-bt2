@@ -16,6 +16,7 @@ public class XemDiem extends javax.swing.JFrame {
      */
     public XemDiem() {
         initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
 
     /**

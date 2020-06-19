@@ -16,6 +16,7 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
      */
     public DangKiPhucKhao() {
         initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
 
     /**

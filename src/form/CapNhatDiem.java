@@ -16,6 +16,7 @@ public class CapNhatDiem extends javax.swing.JFrame {
      */
     public CapNhatDiem() {
         initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
 
     /**

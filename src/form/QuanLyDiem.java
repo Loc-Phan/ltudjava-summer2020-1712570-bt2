@@ -5,17 +5,34 @@
  */
 package form;
 
+import dao.DiemDAO;
+import dao.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pojo.Loptheomon;
+import pojo.Monhoc;
+import pojo.Sinhvien;
+
 /**
  *
  * @author Chen-Yang
  */
 public class QuanLyDiem extends javax.swing.JFrame {
-
+    String filePath;
     /**
      * Creates new form QuanLyDiem
      */
     public QuanLyDiem() {
         initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -38,16 +55,16 @@ public class QuanLyDiem extends javax.swing.JFrame {
         jComboBox7 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtImport = new javax.swing.JTextField();
+        btnChonFile = new javax.swing.JButton();
+        btnImport = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox8 = new javax.swing.JComboBox<>();
-        jComboBox9 = new javax.swing.JComboBox<>();
+        cbbLopDS = new javax.swing.JComboBox<>();
+        cbbMonDS = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnTaiSV = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbeDS = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
@@ -143,13 +160,23 @@ public class QuanLyDiem extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtImport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Chọn file");
+        btnChonFile.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnChonFile.setText("Chọn file");
+        btnChonFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChonFileActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton2.setText("Import");
+        btnImport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnImport.setText("Import");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,13 +184,13 @@ public class QuanLyDiem extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtImport, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnChonFile, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(177, 177, 177)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -171,10 +198,10 @@ public class QuanLyDiem extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtImport, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChonFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
-                .addComponent(jButton2)
+                .addComponent(btnImport)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -184,31 +211,54 @@ public class QuanLyDiem extends javax.swing.JFrame {
         jLabel9.setText("Lớp");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 367, 42, 30));
 
-        jComboBox8.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox8, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 367, 340, 30));
+        cbbLopDS.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbLopDS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "17HCB", "18HCB" }));
+        cbbLopDS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLopDSActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbbLopDS, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 367, 340, 30));
 
-        jComboBox9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox9, new org.netbeans.lib.awtextra.AbsoluteConstraints(491, 367, 319, 30));
+        cbbMonDS.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbMonDS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbMonDSActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbbMonDS, new org.netbeans.lib.awtextra.AbsoluteConstraints(491, 367, 319, 30));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel10.setText("Môn");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(443, 367, 43, 30));
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton3.setText("Tải danh sách SV");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(828, 367, 176, 30));
+        btnTaiSV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnTaiSV.setText("Tải danh sách SV");
+        btnTaiSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaiSVActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTaiSV, new org.netbeans.lib.awtextra.AbsoluteConstraints(828, 367, 176, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbeDS.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbeDS.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tbeDSAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tbeDS);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 415, 992, 180));
 
@@ -245,6 +295,124 @@ public class QuanLyDiem extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnChonFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonFileActionPerformed
+        JFileChooser c = new JFileChooser("data");
+        int rVal = c.showOpenDialog(null);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+        String filename = c.getSelectedFile().getName();
+        String dir = c.getCurrentDirectory().toString();
+        filePath = dir+"\\"+filename;
+        txtImport.setText(filePath);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnChonFileActionPerformed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        if(filePath==null) {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn file");
+        }
+        else {
+            try {
+                if(DiemDAO.updateDiemImport(filePath)==true) {
+                    JOptionPane.showMessageDialog(rootPane, "Import danh sách điểm thành công");
+                }
+                else {
+                    JOptionPane.showMessageDialog(rootPane, "Không thể import");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ImportSinhVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //System.exit(0); 
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImportActionPerformed
+
+    private void cbbLopDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLopDSActionPerformed
+        String lop = (String) cbbLopDS.getSelectedItem().toString();
+        List<Monhoc> dsMon = ThoiKhoaBieuDAO.layDachSachTKB();
+        //cbbMonDS = new JComboBox();
+        cbbMonDS.removeAllItems();
+        for(int i=0;i<dsMon.size();i++) {
+            
+            if(lop.compareTo(dsMon.get(i).getLophoc().getMaLop())==0) {
+                //cbbMonDS = new JComboBox();
+                //cbbMonDS.removeAllItems();
+                cbbMonDS.addItem(dsMon.get(i).getTenMon()+" - "+dsMon.get(i).getMaMon());
+                cbbMonDS.setVisible(true);
+            }
+            
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbLopDSActionPerformed
+
+    
+    
+    private void cbbMonDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbMonDSActionPerformed
+//        String lop = (String) cbbLopDS.getSelectedItem().toString();
+//        List<Monhoc> dsMon = ThoiKhoaBieuDAO.layDachSachTKB();
+//        for(int i=0;i<dsMon.size();i++) {
+//            if(lop.compareTo(dsMon.get(i).getLophoc().getMaLop())==0) {
+//                cbbMonDS.addItem(dsMon.get(i).getTenMon());
+//            }
+//        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbMonDSActionPerformed
+
+    private void btnTaiSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiSVActionPerformed
+        showResult();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTaiSVActionPerformed
+
+    private void tbeDSAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbeDSAncestorAdded
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbeDSAncestorAdded
+
+    public void showResult() {
+        String lop = (String) cbbLopDS.getSelectedItem().toString();
+        String mon = (String) cbbMonDS.getSelectedItem().toString();
+        
+        List<Loptheomon> ds = DiemDAO.layDachSachLopTheoMon();
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[] {
+            "STT","MSSV","Họ tên","Điểm GK","Điểm CK","Điểm khác","Điểm tổng","Tình trạng"
+        });
+        
+        int j;
+        ArrayList arrRows = new ArrayList();
+        //System.out.println(mon);
+        for(int i=0;i<ds.size();i++) {
+            Loptheomon ltm = ds.get(i);
+            //System.out.println(ds.get(i).getMonhoc().getMaMon());
+            if(ds.get(i).getLophoc().getMaLop().compareTo(lop)==0) {
+                
+                if(mon.contains(ds.get(i).getMonhoc().getMaMon())==true) {
+                    //System.out.println("Vô được if nhỏ");
+                    j=i+1;
+                    arrRows.add(j);
+                    
+                    arrRows.add("1");
+                    arrRows.add("2");
+                    arrRows.add(ltm.getDiemGk());
+                    arrRows.add(ltm.getDiemCk());
+                    arrRows.add(ltm.getDiemKhac());
+                    arrRows.add(ltm.getDiemTong());
+                    if(ltm.getDiemTong()>=5) {
+                        arrRows.add("Đậu");
+                    }
+                    else {
+                        arrRows.add("Rớt");
+                    }
+
+                    model.addRow(arrRows.toArray());
+                    arrRows.clear();
+                }
+            }
+        }
+        tbeDS.setModel(model);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -280,18 +448,19 @@ public class QuanLyDiem extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnChonFile;
+    private javax.swing.JButton btnImport;
+    private javax.swing.JButton btnTaiSV;
+    private javax.swing.JComboBox<String> cbbLopDS;
+    private javax.swing.JComboBox<String> cbbMonDS;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JComboBox<String> jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -305,10 +474,10 @@ public class QuanLyDiem extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable tbeDS;
+    private javax.swing.JTextField txtImport;
     // End of variables declaration//GEN-END:variables
 }

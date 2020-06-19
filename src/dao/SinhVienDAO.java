@@ -137,6 +137,45 @@ public class SinhVienDAO {
         }
         return true;
     }
+    public static boolean capNhatThongTinSinhVien(Sinhvien sv) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        if (SinhVienDAO.layThongTinSinhVien(sv.getMssv()) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(sv);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    public static boolean xoaSinhVien(String maSinhVien) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        Sinhvien sv = SinhVienDAO.layThongTinSinhVien(maSinhVien);
+        if(sv==null){
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(sv);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+    return true;
+    }
     
     public static Lophoc layThongTinLopHoc(String malop) {
         Lophoc lh = null;

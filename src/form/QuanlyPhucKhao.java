@@ -16,6 +16,7 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
      */
     public QuanlyPhucKhao() {
         initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
 
     /**

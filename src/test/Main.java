@@ -5,9 +5,11 @@
  */
 package test;
 
+import dao.*;
 import dao.Account;
 import dao.AccountDAO;
 import dao.DiemDAO;
+import dao.DocFileDiemCSV;
 import java.util.List;
 import pojo.*;
 import dao.SinhVienDAO;
@@ -90,26 +92,94 @@ public class Main {
 //        for(int i=0;i<dsAccount.size();i++) {
 //            System.out.println(dsAccount.get(i).getTenDN());
 //        }
-        List<Account> dsAccount = AccountDAO.DocAccount("data/svAccount.csv");
-        try {
-            FileOutputStream fos = new FileOutputStream("data/svAccount.csv");
-            OutputStreamWriter osw = new OutputStreamWriter(fos,"UTF-8");
-            BufferedWriter bw = new BufferedWriter(osw);
-            //bw.newLine();
-            for(Account acc:dsAccount) {
-                String line=acc.getTenDN()+","+acc.getMatKhau();
-                bw.write(line);
-                bw.newLine();
-            }
-            
-            bw.close();
-            osw.close();
-            fos.close();
-            
-        }catch(IOException e) {
-            e.printStackTrace();
+//        List<Account> dsAccount = AccountDAO.DocAccount("data/svAccount.csv");
+//        try {
+//            FileOutputStream fos = new FileOutputStream("data/svAccount.csv");
+//            OutputStreamWriter osw = new OutputStreamWriter(fos,"UTF-8");
+//            BufferedWriter bw = new BufferedWriter(osw);
+//            //bw.newLine();
+//            for(Account acc:dsAccount) {
+//                String line=acc.getTenDN()+","+acc.getMatKhau();
+//                bw.write(line);
+//                bw.newLine();
+//            }
+//            
+//            bw.close();
+//            osw.close();
+//            fos.close();
+//            
+//        }catch(IOException e) {
+//            e.printStackTrace();
+//        }
+//        
+//    }
+//        String path = "data/Diem17HCB.csv";
+//        List<DocFileDiemCSV> ds = new ArrayList<DocFileDiemCSV>();
+//        FileInputStream fis = null;
+//        InputStreamReader isr = null;
+//        BufferedReader br = null;
+//        try{
+//            fis = new FileInputStream(path);
+//            isr = new InputStreamReader(fis);
+//            br = new BufferedReader(isr);
+//            int brr = br.read();
+//            String line = br.readLine();
+//            String[] lopHoc_ = line.split(",");
+//            String lopHoc = lopHoc_[0];
+//            
+//            line = br.readLine(); // bo qua dong chua thong tin
+//            line = br.readLine(); 
+//            while(line!=null) {
+//                String[] arr=line.split(",");
+//                DocFileDiemCSV diem = new DocFileDiemCSV();
+//                
+//                diem.setLop(lopHoc);
+//                diem.setMssv(arr[1]);
+//                diem.setDiemGK(Float.parseFloat(arr[3]));
+//                diem.setDiemCK(Float.parseFloat(arr[4]));
+//                diem.setDiemKhac(Float.parseFloat(arr[5]));
+//                diem.setDiemTong(Float.parseFloat(arr[6]));
+//                
+//                ds.add(diem);
+//                line = br.readLine();
+//            }
+//            br.close();
+//            isr.close();
+//            fis.close();
+//        } catch(IOException e) {
+//            e.printStackTrace();
+//        }  finally {
+//            br.close();
+//            isr.close();
+//            fis.close();
+//        }  
+//        List<DocFileDiemCSV> ds = DocDiem.DocDSSV("data/Diem17HCB.csv");
+//        if(ds.size()==0) {
+//            
+//        }
+//        else {
+//            List<Loptheomon> dsLop = DiemDAO.layDachSachLopTheoMon();
+//            for(int j=0;j<ds.size();j++) {
+//                for(int i=0;i<dsLop.size();i++) {
+//                    if(ds.get(0).getLop().compareTo(dsLop.get(i).getMaLopTheoMon())==0){
+//                        if(ds.get(j).getMssv().compareTo(dsLop.get(i).getSinhvien().getMssv())==0) {
+//                            Loptheomon ltm = DiemDAO.layThongTinLopTheoMon(dsLop.get(i).getId());
+//                            if(ltm!=null) {
+//                                ltm.setDiemGk(ds.get(j).getDiemGK());
+//                                ltm.setDiemCk(ds.get(j).getDiemCK());
+//                                ltm.setDiemKhac(ds.get(j).getDiemKhac());
+//                                ltm.setDiemTong(ds.get(j).getDiemTong());
+//                                DiemDAO.capNhatThongTinDiem(ltm);
+//                            }
+//                        }
+//                    }
+//                } 
+//            }
+//        }
+        String mon = "Thiết kế giao diện - CTT011";
+        if(mon.contains("CTT011")==true) {
+            System.out.println("Đúng rồi");
         }
-        
     }
-
+    
 }

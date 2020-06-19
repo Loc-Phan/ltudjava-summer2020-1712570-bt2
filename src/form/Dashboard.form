@@ -111,6 +111,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="XEM &#x110;I&#x1ec2;M"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXemDiemActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnQLTKB">
       <Properties>
@@ -130,6 +133,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="DANH S&#xc1;CH L&#x1eda;P"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDSLActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnQLD">
       <Properties>
@@ -138,6 +144,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; &#x110;I&#x1ec2;M"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQLDActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnQLPK">
       <Properties>
@@ -146,6 +155,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; PH&#xda;C KH&#x1ea2;O"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQLPKActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDKPK">
       <Properties>
@@ -154,6 +166,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x110;&#x102;NG K&#xcd; PH&#xda;C KH&#x1ea2;O"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDKPKActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDoiMK">
       <Properties>

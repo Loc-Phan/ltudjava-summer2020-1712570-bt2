@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -204,7 +205,13 @@ public class QuanLyTKB extends javax.swing.JFrame {
             }
             //System.exit(0); 
         }
-        // TODO add your handling code here:
+//        try {
+//            //them mac dinh tat ca sv cua lop deu hoc mon nay
+//            DiemDAO.themDanhSachLopTheoMon();
+//            // TODO add your handling code here:
+//        } catch (IOException ex) {
+//            Logger.getLogger(QuanLyTKB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_btnImportTKBActionPerformed
 
     private void btnTaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiActionPerformed
@@ -212,18 +219,31 @@ public class QuanLyTKB extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTaiActionPerformed
     public void showResult() {
-        String lop = (String) cbbLop.getSelectedItem();
+        String lop = (String) cbbLop.getSelectedItem().toString();
+        List<Monhoc> ds = (ArrayList<Monhoc>) ThoiKhoaBieuDAO.layDachSachTKB();
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[] {
+            "STT","Mã môn","Tên môn","Phòng học"
+        });
         
-        int j;
+        int j=1;
+        ArrayList arrRows = new ArrayList();
         for(int i=0;i<ds.size();i++) {
             Monhoc mh = ds.get(i);
-            if(lop.compareTo(mh.getLophoc().getMaLop())==0) {
-                j=i+1;
-                model.addRow(new Object[] {
-                    j++,mh.getMaMon(),mh.getTenMon(),mh.getPhongHoc()
-                });
+            if(ds.get(i).getLophoc().getMaLop().compareTo(lop)==0) {
+                
+                arrRows.add(j);
+                j++;
+                arrRows.add(mh.getMaMon());
+                arrRows.add(mh.getTenMon());
+                arrRows.add(mh.getPhongHoc());
+                
+                
+                model.addRow(arrRows.toArray());
+                arrRows.clear();
             }
         }
+        tbeTKB.setModel(model);
     }
     /**
      * @param args the command line arguments

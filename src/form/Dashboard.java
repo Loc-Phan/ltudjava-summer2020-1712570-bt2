@@ -6,6 +6,10 @@
 package form;
 import dao.Account;
 import form.*;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 /**
  *
  * @author Chen-Yang
@@ -18,7 +22,8 @@ public class Dashboard extends javax.swing.JFrame {
     Account temp=new Account();
     
     public Dashboard() {
-        
+        initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
     public Dashboard(Account acc) {
         temp = acc;
@@ -59,6 +64,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnXemDiem.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnXemDiem.setText("XEM ĐIỂM");
+        btnXemDiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemDiemActionPerformed(evt);
+            }
+        });
 
         btnQLTKB.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnQLTKB.setText("QUẢN LÝ THỜI KHÓA BIỂU");
@@ -70,15 +80,35 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnDSL.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnDSL.setText("DANH SÁCH LỚP");
+        btnDSL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDSLActionPerformed(evt);
+            }
+        });
 
         btnQLD.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnQLD.setText("QUẢN LÝ ĐIỂM");
+        btnQLD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLDActionPerformed(evt);
+            }
+        });
 
         btnQLPK.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnQLPK.setText("QUẢN LÝ PHÚC KHẢO");
+        btnQLPK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLPKActionPerformed(evt);
+            }
+        });
 
         btnDKPK.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnDKPK.setText("ĐĂNG KÍ PHÚC KHẢO");
+        btnDKPK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDKPKActionPerformed(evt);
+            }
+        });
 
         btnDoiMK.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnDoiMK.setText("Đổi mật khẩu");
@@ -169,8 +199,22 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQLTKBActionPerformed
 
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
-
-        this.setVisible(false);
+        close();
+        Login lg = new Login();
+        lg.setVisible(true);
+//        btnDangXuat.addActionListener(new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//               close();
+//               Login lg = new Login();
+//               lg.setVisible(true);
+//               //To change body of generated methods, choose Tools | Templates.
+//            }
+//
+//
+//        });
+        
+        
         
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDangXuatActionPerformed
@@ -181,9 +225,47 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDoiMKActionPerformed
 
+    private void btnDSLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDSLActionPerformed
+        DanhSachLop dsLop = new DanhSachLop();
+        dsLop.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDSLActionPerformed
+
+    private void btnQLDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLDActionPerformed
+        QuanLyDiem qlDiem = new QuanLyDiem();
+        qlDiem.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnQLDActionPerformed
+
+    private void btnQLPKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLPKActionPerformed
+        QuanlyPhucKhao qlpk = new QuanlyPhucKhao();
+        qlpk.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnQLPKActionPerformed
+
+    private void btnXemDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemDiemActionPerformed
+        XemDiem xemDiem = new XemDiem();
+        xemDiem.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXemDiemActionPerformed
+
+    private void btnDKPKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDKPKActionPerformed
+        DangKiPhucKhao dk = new DangKiPhucKhao();
+        dk.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDKPKActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    
+    public void close() {
+        WindowEvent windowEvent;
+        windowEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(windowEvent);
+                //To change body of generated methods, choose Tools | Templates.
+    }
+                
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
