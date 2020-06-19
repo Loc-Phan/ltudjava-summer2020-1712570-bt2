@@ -8,7 +8,9 @@ package form;
 import dao.*;
 import javax.swing.JComboBox;
 import form.ImportSinhVien;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojo.*;
@@ -17,19 +19,15 @@ import pojo.*;
  * @author Chen-Yang
  */
 public class QuanLySinhVien extends javax.swing.JFrame {
-    private ArrayList<Sinhvien> ds;
-    DefaultTableModel model;
+    //private ArrayList<Sinhvien> ds;
+    //DefaultTableModel model;
     /**
      * Creates new form QuanLySinhVien
      */
     public QuanLySinhVien() {
         initComponents();
         setDefaultCloseOperation(ImportSinhVien.DISPOSE_ON_CLOSE);
-        ds = (ArrayList<Sinhvien>) SinhVienDAO.layDachSachSinhVien();
-        model = (DefaultTableModel) tbeSinhVien.getModel();
-        model.setColumnIdentifiers(new Object[] {
-            "STT","MSSV","Họ tên","Giới tính","CMND"
-        });
+
     }
 
     /**
@@ -212,6 +210,7 @@ public class QuanLySinhVien extends javax.swing.JFrame {
             }
         });
 
+        tbeSinhVien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tbeSinhVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -220,6 +219,15 @@ public class QuanLySinhVien extends javax.swing.JFrame {
 
             }
         ));
+        tbeSinhVien.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tbeSinhVienAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane4.setViewportView(tbeSinhVien);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -382,23 +390,41 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     private void btnTaiDSSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiDSSVActionPerformed
         
         showResult();
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTaiDSSVActionPerformed
+
+    private void tbeSinhVienAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbeSinhVienAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbeSinhVienAncestorAdded
     
     public void showResult() {
-        String lop = (String) cbbLopSV.getSelectedItem();
+        String lop = (String) cbbLopSV.getSelectedItem().toString();
+        List<Sinhvien> ds = (ArrayList<Sinhvien>) SinhVienDAO.layDachSachSinhVien();
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[] {
+            "STT","MSSV","Họ tên","Giới tính","CMND"
+        });
         
         int j;
+        ArrayList arrRows = new ArrayList();
         for(int i=0;i<ds.size();i++) {
             Sinhvien sv = ds.get(i);
-            if(lop.compareTo(sv.getLophoc().getMaLop())==0) {
+            if(ds.get(i).getLophoc().getMaLop().compareTo(lop)==0) {
                 j=i+1;
-                model.addRow(new Object[] {
-                    j++,sv.getMssv(),sv.getHoTen(),sv.getGioiTinh(),sv.getCmnd()
-                });
+                arrRows.add(j);
+                arrRows.add(sv.getMssv());
+                arrRows.add(sv.getHoTen());
+                arrRows.add(sv.getGioiTinh());
+                arrRows.add(sv.getCmnd());
+                
+                model.addRow(arrRows.toArray());
+                arrRows.clear();
             }
         }
+        tbeSinhVien.setModel(model);
     }
+    
     /**
      * @param args the command line arguments
      */

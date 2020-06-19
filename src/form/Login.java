@@ -103,8 +103,11 @@ public class Login extends javax.swing.JFrame {
                 try {
                     dsAcc =  AccountDAO.DocAccount(path);
                     if(AccountDAO.Search(acc, dsAcc)==true) {
-                        Dashboard db = new Dashboard();
+                        Dashboard db = new Dashboard( acc);
+                        
                         db.setVisible(true);
+                        //DoiMatKhau dmk = new DoiMatKhau(acc);
+                        //dmk.setVisible(false);
                     }
                     else {
                         JOptionPane.showMessageDialog(rootPane,"Tên đăng nhập hoặc mật khẩu không đúng!");
@@ -115,12 +118,12 @@ public class Login extends javax.swing.JFrame {
                 
                 
             }
-            else {
+            else if(!cbxGV.isSelected()){
                 path = "data/svAccount.csv";
                 try {
                     dsAcc =  AccountDAO.DocAccount(path);
                     if(AccountDAO.Search(acc, dsAcc)==true) {
-                        Dashboard db = new Dashboard();
+                        Dashboard db = new Dashboard(acc);
                         db.setVisible(true);
                     }
                     else {
@@ -134,6 +137,13 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
+    public String layTenDN() {
+        return txtTenDN.getText();
+    }
+    public String layMatKhau() {
+        return txtMatKhau.getText();
+    }
+    
     /**
      * @param args the command line arguments
      */

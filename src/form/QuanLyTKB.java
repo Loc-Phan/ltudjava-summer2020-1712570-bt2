@@ -167,7 +167,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChonFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonFileActionPerformed
-        JFileChooser c = new JFileChooser();
+        JFileChooser c = new JFileChooser("data");
         int rVal = c.showOpenDialog(null);
         if (rVal == JFileChooser.APPROVE_OPTION) {
             String filename = c.getSelectedFile().getName();

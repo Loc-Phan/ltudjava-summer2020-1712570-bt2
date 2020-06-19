@@ -22,7 +22,7 @@ import java.util.List;
 public class AccountDAO {
     public static List<Account> DocAccount(String path) throws IOException 
     {
-        ArrayList dsAccount = new ArrayList<Account>();
+        List<Account> dsAccount = new ArrayList<Account>();
         FileInputStream fis = null;
         InputStreamReader isr = null;
         BufferedReader br = null;
@@ -30,10 +30,10 @@ public class AccountDAO {
             fis = new FileInputStream(path);
             isr = new InputStreamReader(fis);
             br = new BufferedReader(isr);
-            int brr = br.read();
+            //int brr = br.read();
 
-            String line = br.readLine(); // bo qua dong chua thong tin
-            line = br.readLine(); 
+            String line = br.readLine(); 
+            
             while(line!=null) {
                 String[] arr=line.split(",");
                 Account acc = new Account();
@@ -59,7 +59,7 @@ public class AccountDAO {
             FileOutputStream fos = new FileOutputStream(path);
             OutputStreamWriter osw = new OutputStreamWriter(fos,"UTF-8");
             BufferedWriter bw = new BufferedWriter(osw);
-            bw.newLine();
+            //bw.newLine();
             for(Account acc:dsAccount) {
                 String line=acc.getTenDN()+","+acc.getMatKhau();
                 bw.write(line);
@@ -82,5 +82,13 @@ public class AccountDAO {
             }
         }
         return false;
+    }
+    public static int Index(Account acc, List<Account> ds) {
+        for(int i=0;i<ds.size();i++) {
+            if(acc.getTenDN().compareTo(ds.get(i).getTenDN())==0 && acc.getMatKhau().compareTo(ds.get(i).getMatKhau())==0) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

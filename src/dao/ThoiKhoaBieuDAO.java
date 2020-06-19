@@ -53,8 +53,14 @@ public class ThoiKhoaBieuDAO {
                 lh.setMaLop(lopHoc);
                 lh.setTenLop(lopHoc);
                 lh.setLaLopHoc(1);
-                SinhVienDAO.themLopHoc(lh);
                 mh.setLophoc(lh);
+                
+                Lophoc lh_ = new Lophoc();
+                lh_.setLaLopHoc(0);
+                lh_.setMaLop(lopHoc+"-"+arr[1]);
+                lh_.setTenLop(lopHoc+"-"+arr[1]);
+                SinhVienDAO.themLopHoc(lh_);
+                
                 ds.add(mh);
 
                 line = br.readLine();

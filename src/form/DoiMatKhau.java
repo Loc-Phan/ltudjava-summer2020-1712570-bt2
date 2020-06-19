@@ -5,6 +5,16 @@
  */
 package form;
 
+import form.*;
+import dao.Account;
+import dao.AccountDAO;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Chen-Yang
@@ -14,10 +24,20 @@ public class DoiMatKhau extends javax.swing.JFrame {
     /**
      * Creates new form DoiMatKhau
      */
+    Account accTemp;
+    
     public DoiMatKhau() {
-        initComponents();
     }
-
+    public DoiMatKhau(Account acc) {
+        accTemp = new Account();
+        accTemp = acc;
+        //System.out.println("usename: "+acc.getTenDN());
+        initComponents();
+        setDefaultCloseOperation(DoiMatKhau.DISPOSE_ON_CLOSE);
+    }
+    
+   
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,12 +50,12 @@ public class DoiMatKhau extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtMatKhauCu = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        txtMatKhauMoi = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField3 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        txtMatKhauMoi_ = new javax.swing.JPasswordField();
+        btnDoiMK = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -48,30 +68,35 @@ public class DoiMatKhau extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Mật khẩu cũ:");
 
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtMatKhauCu.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Mật khẩu mới:");
 
-        jPasswordField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jPasswordField2.addActionListener(new java.awt.event.ActionListener() {
+        txtMatKhauMoi.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtMatKhauMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField2ActionPerformed(evt);
+                txtMatKhauMoiActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Nhập lại mật khẩu mới:");
 
-        jPasswordField3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jPasswordField3.addActionListener(new java.awt.event.ActionListener() {
+        txtMatKhauMoi_.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtMatKhauMoi_.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField3ActionPerformed(evt);
+                txtMatKhauMoi_ActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Đổi mật khẩu");
+        btnDoiMK.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnDoiMK.setText("Đổi mật khẩu");
+        btnDoiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,16 +113,16 @@ public class DoiMatKhau extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(txtMatKhauCu, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMatKhauMoi_, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,18 +132,18 @@ public class DoiMatKhau extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMatKhauCu, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMatKhauMoi_, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
 
@@ -126,13 +151,83 @@ public class DoiMatKhau extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField3ActionPerformed
+    private void txtMatKhauMoi_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauMoi_ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField3ActionPerformed
+    }//GEN-LAST:event_txtMatKhauMoi_ActionPerformed
 
-    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
+    private void txtMatKhauMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauMoiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField2ActionPerformed
+    }//GEN-LAST:event_txtMatKhauMoiActionPerformed
+
+    private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
+        String path = "data/gvAccount.csv";
+        String path_ = "data/svAccount.csv";
+        
+        
+        if(txtMatKhauCu.getText().equals("") || txtMatKhauMoi.getText().equals("") || txtMatKhauMoi_.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane,"Bạn cần nhập đầy đủ thông tin");
+        }
+        else if(accTemp.getMatKhau().compareTo(txtMatKhauCu.getText())!=0) {
+            JOptionPane.showMessageDialog(rootPane,"Bạn cần nhập đúng mật khẩu");
+        }
+        
+        else if(txtMatKhauMoi.getText().compareTo(txtMatKhauMoi_.getText())!=0) {
+            JOptionPane.showMessageDialog(rootPane,"Bạn cần nhập lại mật khẩu mới cho đúng");
+        }
+        
+        else {
+                if(accTemp.getTenDN().compareTo("giaovu")==0) {
+                    accTemp.setMatKhau(txtMatKhauMoi.getText());
+                    List<Account> ds = new ArrayList<Account>();
+                    ds.add(accTemp);
+                    if(AccountDAO.GhiAccount(path, ds)==true) {
+                        JOptionPane.showMessageDialog(rootPane,"Đổi mật khẩu thành công"); 
+                    }
+                }
+                else {
+                    
+                    try {
+                        List<Account> dsAccount_=AccountDAO.DocAccount(path_);
+                        
+                        for(int i=0;i<dsAccount_.size();i++) {
+                            if(accTemp.getTenDN().compareTo(dsAccount_.get(i).getTenDN())==0) {
+                                dsAccount_.get(i).setMatKhau(txtMatKhauMoi.getText());
+                            }
+                            
+                        }
+                        if(AccountDAO.GhiAccount(path_, dsAccount_)==true) {
+                            JOptionPane.showMessageDialog(rootPane,"Đổi mật khẩu thành công"); 
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(rootPane,"Vui lòng thử lại"); 
+                        }
+                        
+//                    try {
+//                        List<Account> dsAcc =  AccountDAO.DocAccount(path_);
+//                        if(AccountDAO.Search(accTemp, dsAcc)==true) {
+//                            for(int i=0;i<dsAcc.size();i++) {
+//                                
+//                            }
+//                            if(AccountDAO.GhiAccount(path_, dsAcc)==true) {
+//                                JOptionPane.showMessageDialog(rootPane,"Đổi mật khẩu thành công"); 
+//                            }
+//                            else {
+//                                JOptionPane.showMessageDialog(rootPane,"Vui lòng thử lại"); 
+//                            }
+//                        }
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+                    } catch (IOException ex) {
+                        Logger.getLogger(DoiMatKhau.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+            }
+           
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoiMKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,14 +265,16 @@ public class DoiMatKhau extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnDoiMK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField txtMatKhauCu;
+    private javax.swing.JPasswordField txtMatKhauMoi;
+    private javax.swing.JPasswordField txtMatKhauMoi_;
     // End of variables declaration//GEN-END:variables
+
+ 
 }

@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package form;
-
+import dao.Account;
+import form.*;
 /**
  *
  * @author Chen-Yang
@@ -14,7 +15,14 @@ public class Dashboard extends javax.swing.JFrame {
     /**
      * Creates new form Dashboard
      */
+    Account temp=new Account();
+    
     public Dashboard() {
+        
+    }
+    public Dashboard(Account acc) {
+        temp = acc;
+        //System.out.println("usename: "+acc.getTenDN());
         initComponents();
         setDefaultCloseOperation(Dashboard.DISPOSE_ON_CLOSE);
     }
@@ -74,6 +82,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnDoiMK.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnDoiMK.setText("Đổi mật khẩu");
+        btnDoiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMKActionPerformed(evt);
+            }
+        });
 
         btnDangXuat.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnDangXuat.setText("Đăng xuất");
@@ -156,9 +169,17 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQLTKBActionPerformed
 
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
+
+        this.setVisible(false);
         
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDangXuatActionPerformed
+
+    private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
+        DoiMatKhau dmk = new DoiMatKhau(temp);
+        dmk.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoiMKActionPerformed
 
     /**
      * @param args the command line arguments
