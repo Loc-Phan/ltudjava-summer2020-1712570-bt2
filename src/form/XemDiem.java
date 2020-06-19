@@ -5,15 +5,57 @@
  */
 package form;
 
+import dao.Account;
+import dao.DiemDAO;
+import dao.SinhVienDAO;
+import dao.ThoiKhoaBieuDAO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import pojo.Lophoc;
+import pojo.Loptheomon;
+import pojo.Monhoc;
+import pojo.Sinhvien;
+
 /**
  *
  * @author Chen-Yang
  */
 public class XemDiem extends javax.swing.JFrame {
-
+    DefaultTableModel model;
+   
     /**
      * Creates new form XemDiem
      */
+    Account temp = new Account();
+    public XemDiem(Account acc) {
+        
+
+        initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
+        
+        temp=acc;
+        
+        txtMSSV.setText(acc.getTenDN());
+        txtMSSV.setEnabled(false);
+        txtMSSV.setVisible(true);
+        
+        Sinhvien sv = SinhVienDAO.layThongTinSinhVien(acc.getTenDN());
+        txtHoTen.setText(sv.getHoTen());
+        txtHoTen.setEnabled(false);
+        txtHoTen.setVisible(true);
+        
+        List<Loptheomon> ds = DiemDAO.layDachSachLopTheoMon();
+        cbbMon.removeAllItems();
+        for(int i=0;i<ds.size();i++) {
+            
+            if(acc.getTenDN().compareTo(ds.get(i).getSinhvien().getMssv())==0) {
+                Monhoc mh = ThoiKhoaBieuDAO.layThongTinTKB(ds.get(i).getMonhoc().getMaMon());
+                cbbMon.addItem(mh.getTenMon()+" - "+mh.getMaMon());
+                cbbMon.setVisible(true);
+            }
+        }
+    }
     public XemDiem() {
         initComponents();
         setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
@@ -31,14 +73,14 @@ public class XemDiem extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtMSSV = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtHoTen = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        cbbMon = new javax.swing.JComboBox<>();
+        btnTaiDiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbeDiem = new javax.swing.JTable();
 
         jLabel2.setText("jLabel2");
 
@@ -51,31 +93,41 @@ public class XemDiem extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("MSSV:");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtMSSV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtMSSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMSSVActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Họ tên:");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtHoTen.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Môn:");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbMon.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbMon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Tải điểm");
+        btnTaiDiem.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnTaiDiem.setText("Tải điểm");
+        btnTaiDiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaiDiemActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbeDiem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbeDiem);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,18 +139,18 @@ public class XemDiem extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(82, 82, 82)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbMon, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnTaiDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -115,15 +167,15 @@ public class XemDiem extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbbMon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTaiDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -132,6 +184,62 @@ public class XemDiem extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtMSSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMSSVActionPerformed
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMSSVActionPerformed
+
+    private void btnTaiDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiDiemActionPerformed
+           showResult();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTaiDiemActionPerformed
+
+    public void showResult() {
+//        String lop = (String) cbbLopDS.getSelectedItem().toString();
+        String mon = (String) cbbMon.getSelectedItem().toString();
+        
+        List<Loptheomon> ds = DiemDAO.layDachSachLopTheoMon();
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[] {
+            "STT","MSSV","Họ tên","Điểm GK","Điểm CK","Điểm khác","Điểm tổng","Tình trạng"
+        });
+        
+        int j;
+        ArrayList arrRows = new ArrayList();
+        //System.out.println(mon);
+        for(int i=0;i<ds.size();i++) {
+            //Loptheomon ltm = ds.get(i);
+            //System.out.println(ds.get(i).getMonhoc().getMaMon());
+            if(ds.get(i).getSinhvien().getMssv().compareTo(temp.getTenDN())==0) {
+                
+                if(mon.contains(ds.get(i).getMonhoc().getMaMon())==true) {
+                    //System.out.println("Vô được if nhỏ");
+                    j=i+1;
+                    arrRows.add(ds.get(i).getId());
+                    arrRows.add(j);
+                    //Loptheomon sv = DiemDAO.layThongTinHocSinhLopTheoMon(ds.get(i).getSinhvien());
+                    arrRows.add(ds.get(i).getSinhvien().getMssv());
+                    Sinhvien sv = SinhVienDAO.layThongTinSinhVien(ds.get(i).getSinhvien().getMssv());
+                    arrRows.add(sv.getHoTen());
+                    arrRows.add(ds.get(i).getDiemGk());
+                    arrRows.add(ds.get(i).getDiemCk());
+                    arrRows.add(ds.get(i).getDiemKhac());
+                    arrRows.add(ds.get(i).getDiemTong());
+                    if(ds.get(i).getDiemTong()>=5) {
+                        arrRows.add("Đậu");
+                    }
+                    else {
+                        arrRows.add("Rớt");
+                    }
+
+                    model.addRow(arrRows.toArray());
+                    arrRows.clear();
+                }
+            }
+        }
+        tbeDiem.setModel(model);
+    }
     /**
      * @param args the command line arguments
      */
@@ -168,16 +276,16 @@ public class XemDiem extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnTaiDiem;
+    private javax.swing.JComboBox<String> cbbMon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tbeDiem;
+    private javax.swing.JTextField txtHoTen;
+    private javax.swing.JTextField txtMSSV;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,7 @@
         <property name="phongHoc" type="string">
             <column name="PhongHoc" not-null="true" />
         </property>
-        <set name="loptheomons" table="loptheomon" inverse="true" lazy="true" fetch="select">
+        <set name="loptheomons" table="loptheomon" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="Mon" not-null="true" />
             </key>

@@ -195,7 +195,13 @@ public class QuanLyTKB extends javax.swing.JFrame {
             try {
                 if(ThoiKhoaBieuDAO.themDanhSachTKB(filePath)==true) {
                     JOptionPane.showMessageDialog(rootPane, "Import thời khóa biểu thành công");
-                    //DiemDAO.themDanhSachLopTheoMon();
+//                    try {
+//                        //them mac dinh tat ca sv cua lop deu hoc mon nay
+//                        DiemDAO.themDanhSachLopTheoMon();
+//                        // TODO add your handling code here:
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(QuanLyTKB.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                 }
                 else if(ThoiKhoaBieuDAO.themDanhSachTKB(filePath)==false) {
                     JOptionPane.showMessageDialog(rootPane, "Thời khóa biểu này đã tồn tại");
@@ -205,13 +211,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
             }
             //System.exit(0); 
         }
-//        try {
-//            //them mac dinh tat ca sv cua lop deu hoc mon nay
-//            DiemDAO.themDanhSachLopTheoMon();
-//            // TODO add your handling code here:
-//        } catch (IOException ex) {
-//            Logger.getLogger(QuanLyTKB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }//GEN-LAST:event_btnImportTKBActionPerformed
 
     private void btnTaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiActionPerformed

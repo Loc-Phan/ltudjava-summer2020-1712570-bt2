@@ -5,7 +5,7 @@
  */
 package form;
 
-import dao.DiemDAO;
+import dao.*;
 import dao.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.lang.String;
 import pojo.Loptheomon;
 import pojo.Monhoc;
 import pojo.Sinhvien;
@@ -27,6 +28,8 @@ import pojo.Sinhvien;
  */
 public class QuanLyDiem extends javax.swing.JFrame {
     String filePath;
+    DefaultTableModel model;
+    Loptheomon ltm;
     /**
      * Creates new form QuanLyDiem
      */
@@ -67,12 +70,12 @@ public class QuanLyDiem extends javax.swing.JFrame {
         tbeDS = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtTong = new javax.swing.JTextField();
+        txtDau = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        txtRot = new javax.swing.JTextField();
+        btnSuaDiem = new javax.swing.JButton();
+        btnXoaSV = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý điểm");
@@ -221,6 +224,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
         getContentPane().add(cbbLopDS, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 367, 340, 30));
 
         cbbMonDS.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbMonDS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
         cbbMonDS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbbMonDSActionPerformed(evt);
@@ -270,26 +274,36 @@ public class QuanLyDiem extends javax.swing.JFrame {
         jLabel12.setText("Tỉ lệ sinh viên đậu: ");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 650, 181, 30));
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 613, 104, 30));
+        txtTong.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        getContentPane().add(txtTong, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 613, 104, 30));
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 650, 104, 30));
+        txtDau.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        getContentPane().add(txtDau, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 650, 104, 30));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel13.setText("Tỉ lệ sinh viên rớt: ");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 650, 181, 30));
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 650, 104, 30));
+        txtRot.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        getContentPane().add(txtRot, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 650, 104, 30));
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton5.setText("Sửa điểm");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(724, 613, 122, 30));
+        btnSuaDiem.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnSuaDiem.setText("Sửa điểm");
+        btnSuaDiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaDiemActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSuaDiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(724, 613, 122, 30));
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton6.setText("Xóa sinh viên");
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(864, 613, 140, 30));
+        btnXoaSV.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnXoaSV.setText("Xóa sinh viên");
+        btnXoaSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaSVActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnXoaSV, new org.netbeans.lib.awtextra.AbsoluteConstraints(864, 613, 140, 30));
 
         setSize(new java.awt.Dimension(1034, 740));
         setLocationRelativeTo(null);
@@ -369,21 +383,54 @@ public class QuanLyDiem extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tbeDSAncestorAdded
 
+    private void btnSuaDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaDiemActionPerformed
+
+        int index = tbeDS.getSelectedRow();
+        if(index==-1) {
+            JOptionPane.showMessageDialog(rootPane,"Hãy chọn dòng cần sửa");
+        }
+        else {
+            
+            int id = (int) model.getValueAt(index,1);
+            ltm = DiemDAO.layThongTinLopTheoMon(id);
+            CapNhatDiem cnd = new CapNhatDiem(ltm);
+            cnd.setVisible(true);
+        }
+        
+        
+        showResult();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSuaDiemActionPerformed
+
+    private void btnXoaSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSVActionPerformed
+        int index = tbeDS.getSelectedRow();
+        if(index==-1) {
+            JOptionPane.showMessageDialog(rootPane,"Hãy chọn dòng cần xóa");
+        }
+        else {
+            
+            int id = (int) model.getValueAt(index,1);
+            DiemDAO.xoaLopTheoMon(id);
+            showResult();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXoaSVActionPerformed
+
     public void showResult() {
         String lop = (String) cbbLopDS.getSelectedItem().toString();
         String mon = (String) cbbMonDS.getSelectedItem().toString();
         
         List<Loptheomon> ds = DiemDAO.layDachSachLopTheoMon();
-        DefaultTableModel model = new DefaultTableModel();
+        model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[] {
-            "STT","MSSV","Họ tên","Điểm GK","Điểm CK","Điểm khác","Điểm tổng","Tình trạng"
+            "STT","ID","MSSV","Họ tên","Điểm GK","Điểm CK","Điểm khác","Điểm tổng","Tình trạng"
         });
         
         int j;
         ArrayList arrRows = new ArrayList();
         //System.out.println(mon);
         for(int i=0;i<ds.size();i++) {
-            Loptheomon ltm = ds.get(i);
+            //Loptheomon ltm = ds.get(i);
             //System.out.println(ds.get(i).getMonhoc().getMaMon());
             if(ds.get(i).getLophoc().getMaLop().compareTo(lop)==0) {
                 
@@ -391,14 +438,17 @@ public class QuanLyDiem extends javax.swing.JFrame {
                     //System.out.println("Vô được if nhỏ");
                     j=i+1;
                     arrRows.add(j);
+                    arrRows.add(ds.get(i).getId());
                     
-                    arrRows.add("1");
-                    arrRows.add("2");
-                    arrRows.add(ltm.getDiemGk());
-                    arrRows.add(ltm.getDiemCk());
-                    arrRows.add(ltm.getDiemKhac());
-                    arrRows.add(ltm.getDiemTong());
-                    if(ltm.getDiemTong()>=5) {
+                    //Loptheomon sv = DiemDAO.layThongTinHocSinhLopTheoMon(ds.get(i).getSinhvien());
+                    arrRows.add(ds.get(i).getSinhvien().getMssv());
+                    Sinhvien sv = SinhVienDAO.layThongTinSinhVien(ds.get(i).getSinhvien().getMssv());
+                    arrRows.add(sv.getHoTen());
+                    arrRows.add(ds.get(i).getDiemGk());
+                    arrRows.add(ds.get(i).getDiemCk());
+                    arrRows.add(ds.get(i).getDiemKhac());
+                    arrRows.add(ds.get(i).getDiemTong());
+                    if(ds.get(i).getDiemTong()>=5) {
                         arrRows.add("Đậu");
                     }
                     else {
@@ -411,6 +461,26 @@ public class QuanLyDiem extends javax.swing.JFrame {
             }
         }
         tbeDS.setModel(model);
+        
+        //thong ke phan tram dau rot
+        int row = model.getRowCount();
+        String rowTemp = String.valueOf(row);
+        //List<String> tinhTrang = null;
+        int dau=0;
+        for(int jj=0;jj<row;jj++) {
+            String tinhtrang = (String) model.getValueAt(jj, 8);
+            
+            if(tinhtrang.compareTo("Đậu")==0) {
+                dau++;
+            }
+        }
+        float phanTramDau = dau*100/row;
+        
+        txtTong.setText(rowTemp);
+        txtDau.setText(String.valueOf(phanTramDau)+"%");
+        txtRot.setText(String.valueOf(100-phanTramDau)+"%");
+        txtTong.setVisible(true);
+        txtDau.setVisible(true);
     }
     
     /**
@@ -452,12 +522,12 @@ public class QuanLyDiem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChonFile;
     private javax.swing.JButton btnImport;
+    private javax.swing.JButton btnSuaDiem;
     private javax.swing.JButton btnTaiSV;
+    private javax.swing.JButton btnXoaSV;
     private javax.swing.JComboBox<String> cbbLopDS;
     private javax.swing.JComboBox<String> cbbMonDS;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
@@ -474,10 +544,10 @@ public class QuanLyDiem extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTable tbeDS;
+    private javax.swing.JTextField txtDau;
     private javax.swing.JTextField txtImport;
+    private javax.swing.JTextField txtRot;
+    private javax.swing.JTextField txtTong;
     // End of variables declaration//GEN-END:variables
 }

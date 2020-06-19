@@ -87,7 +87,7 @@ public class DiemDAO {
     
     public static boolean themLopTheoMon(Loptheomon ltm) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
-        if (DiemDAO.layThongTinHocSinhLopTheoMon(ltm.getSinhvien())!= null) {
+        if (DiemDAO.layThongTinLopTheoMon(ltm.getId())!= null) {
             return false;
         }
         Transaction transaction = null;
@@ -144,36 +144,36 @@ public class DiemDAO {
     return true;
     }
     public static boolean themDanhSachLopTheoMon() throws IOException {
-        List<Sinhvien> dsSinhVien = SinhVienDAO.layDachSachSinhVien();
-        List<Lophoc> dsLop = SinhVienDAO.layDachSachLop();
-        List<Monhoc> dsMonHoc = ThoiKhoaBieuDAO.layDachSachTKB();
-        for(int i=0;i<dsLop.size();i++) {
-            
-            for(int j=0;j<dsMonHoc.size();j++) {
-                if(dsMonHoc.get(j).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
-                    
-                    int id=1;
-                    for(int k=0;k<dsSinhVien.size();k++) {
-                        
-                        Loptheomon ltm = new Loptheomon();
-                        if(dsSinhVien.get(k).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
-                            
-                            ltm.setId(id++);
-                            ltm.setMaLopTheoMon(dsLop.get(i).getMaLop()+"-"+dsMonHoc.get(j).getMaMon());
-                            ltm.setMonhoc(dsMonHoc.get(j));
-                            ltm.setLophoc(dsLop.get(i));
-                            ltm.setSinhvien(dsSinhVien.get(k));
-                            ltm.setDiemGk(0);
-                            ltm.setDiemCk(0);
-                            ltm.setDiemKhac(0);
-                            ltm.setDiemTong(0);
-                            DiemDAO.themLopTheoMon(ltm);
-                        }
-                    }
-                }
-            }
-        
-        }
+//        List<Sinhvien> dsSinhVien = SinhVienDAO.layDachSachSinhVien();
+//        List<Lophoc> dsLop = SinhVienDAO.layDachSachLop();
+//        List<Monhoc> dsMonHoc = ThoiKhoaBieuDAO.layDachSachTKB();
+//        for(int i=0;i<dsLop.size();i++) {
+//            
+//            for(int j=0;j<dsMonHoc.size();j++) {
+//                if(dsMonHoc.get(j).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
+//                    
+//                    int id=1;
+//                    for(int k=0;k<dsSinhVien.size();k++) {
+//                        
+//                        Loptheomon ltm = new Loptheomon();
+//                        if(dsSinhVien.get(k).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
+//                            
+//                            ltm.setId(id++);
+//                            ltm.setMaLopTheoMon(dsLop.get(i).getMaLop()+"-"+dsMonHoc.get(j).getMaMon());
+//                            ltm.setMonhoc(dsMonHoc.get(j));
+//                            ltm.setLophoc(dsLop.get(i));
+//                            ltm.setSinhvien(dsSinhVien.get(k));
+//                            ltm.setDiemGk(0);
+//                            ltm.setDiemCk(0);
+//                            ltm.setDiemKhac(0);
+//                            ltm.setDiemTong(0);
+//                            DiemDAO.themLopTheoMon(ltm);
+//                        }
+//                    }
+//                }
+//            }
+//        
+//        }
         return true;
     }
     public static boolean updateDiemImport(String path) throws IOException {

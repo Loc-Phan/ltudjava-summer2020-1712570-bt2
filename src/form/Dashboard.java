@@ -24,12 +24,25 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();
         setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
+        
     }
     public Dashboard(Account acc) {
         temp = acc;
-        //System.out.println("usename: "+acc.getTenDN());
+        //System.out.println("usename: "+temp.getTenDN());
         initComponents();
         setDefaultCloseOperation(Dashboard.DISPOSE_ON_CLOSE);
+        if(acc.getTenDN().compareTo("giaovu")==0) {
+            btnXemDiem.setEnabled(false);
+            btnDKPK.setEnabled(false);
+        }
+        else {
+            btnQLSV.setEnabled(false);
+            btnQLTKB.setEnabled(false);
+            btnQLD.setEnabled(false);
+            btnDSL.setEnabled(false);
+            btnQLPK.setEnabled(false);
+            btnDKPK.setEnabled(false);
+        }
     }
 
     /**
@@ -244,7 +257,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQLPKActionPerformed
 
     private void btnXemDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemDiemActionPerformed
-        XemDiem xemDiem = new XemDiem();
+        XemDiem xemDiem = new XemDiem(temp);
         xemDiem.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXemDiemActionPerformed

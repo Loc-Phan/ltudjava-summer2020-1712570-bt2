@@ -176,9 +176,41 @@ public class Main {
 //                } 
 //            }
 //        }
-        String mon = "Thiết kế giao diện - CTT011";
-        if(mon.contains("CTT011")==true) {
-            System.out.println("Đúng rồi");
+//        String mon = "Thiết kế giao diện - CTT011";
+//        if(mon.contains("CTT011")==true) {
+//            System.out.println("Đúng rồi");
+//        }
+        List<Sinhvien> dsSinhVien = SinhVienDAO.layDachSachSinhVien();
+        List<Lophoc> dsLop = SinhVienDAO.layDachSachLop();
+        List<Monhoc> dsMonHoc = ThoiKhoaBieuDAO.layDachSachTKB();
+        for(int i=0;i<dsLop.size();i++) {
+            //System.out.println(dsLop.get(i).getMaLop());
+
+            for(int j=0;j<dsMonHoc.size();j++) {
+
+                if(dsMonHoc.get(j).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
+                    //System.out.println(i+ " Đúng rồi "+j);
+                    int id=1;
+                    for(int k=0;k<dsSinhVien.size();k++) {
+                        
+                        Loptheomon ltm = new Loptheomon();
+                        if(dsSinhVien.get(k).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
+                            //System.out.println(i+ " Đúng rồi "+j);
+                            ltm.setId(id++);
+                            ltm.setMaLopTheoMon(dsLop.get(i).getMaLop()+"-"+dsMonHoc.get(j).getMaMon());
+                            ltm.setMonhoc(dsMonHoc.get(j));
+                            ltm.setLophoc(dsLop.get(i));
+                            ltm.setSinhvien(dsSinhVien.get(k));
+                            ltm.setDiemGk(0);
+                            ltm.setDiemCk(0);
+                            ltm.setDiemKhac(0);
+                            ltm.setDiemTong(0);
+                            DiemDAO.themLopTheoMon(ltm);
+                        }
+                    }
+                }
+            }
+        
         }
     }
     

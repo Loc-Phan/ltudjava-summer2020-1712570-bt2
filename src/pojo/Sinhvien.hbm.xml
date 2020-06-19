@@ -23,7 +23,7 @@
         <property name="matKhau" type="string">
             <column name="MatKhau" not-null="true" />
         </property>
-        <set name="loptheomons" table="loptheomon" inverse="true" lazy="false" fetch="select">
+        <set name="loptheomons" table="loptheomon" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="SinhVien" not-null="true" />
             </key>
