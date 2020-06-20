@@ -9,8 +9,11 @@ import dao.*;
 import javax.swing.JComboBox;
 import form.ImportSinhVien;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojo.*;
@@ -367,6 +370,17 @@ public class QuanLySinhVien extends javax.swing.JFrame {
             sv.setLophoc(lh);
             if(SinhVienDAO.themSinhVien(sv)==true) {
                 JOptionPane.showMessageDialog(rootPane,"Thêm sinh viên "+ txtHoTen.getText() + " thành công!");
+                Account accNew = new Account();
+                accNew.setTenDN(txtMSSV.getText());
+                accNew.setMatKhau(txtMSSV.getText());
+                List<Account> dsAccount = null;
+                try {
+                    dsAccount = AccountDAO.DocAccount("data/svAccount.csv");
+                } catch (IOException ex) {
+                    Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dsAccount.add(accNew);
+                AccountDAO.GhiAccount("data/svAccount.csv", dsAccount);
             }
             else {
                 JOptionPane.showMessageDialog(rootPane,"MSSV: " + txtMSSV.getText() + " này đã tồn tại!");

@@ -5,6 +5,13 @@
  */
 package form;
 
+import dao.PhucKhaoDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import pojo.Phuckhao;
+
 /**
  *
  * @author Chen-Yang
@@ -31,10 +38,10 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBatDau = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtKetThuc = new javax.swing.JTextField();
+        btnCapNhat = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
@@ -55,15 +62,20 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Ngày bắt đầu:");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtBatDau.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Ngày kết thúc:");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtKetThuc.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Cập nhật");
+        btnCapNhat.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnCapNhat.setText("Cập nhật");
+        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,13 +85,13 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -88,10 +100,10 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtBatDau, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtKetThuc, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCapNhat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -129,6 +141,53 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
+        Phuckhao pk = new Phuckhao();
+
+        if (txtBatDau.getText().equals("") || txtKetThuc.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Bạn cần nhập đầy đủ ngày bắt đầu và kết thúc");
+        }
+        if (txtBatDau.getText() != null && txtKetThuc != null) {
+            Date ngBatDau = null;
+            Date ngKetThuc = null;
+            try{
+                ngBatDau = new SimpleDateFormat("dd/MM/yyyy").parse(txtBatDau.getText()); 
+            }catch(ParseException pe){
+                pe.printStackTrace();
+            }
+            try {
+                ngKetThuc = new SimpleDateFormat("dd/MM/yyyy").parse(txtKetThuc.getText());
+            } catch (ParseException pe) {
+                pe.printStackTrace();
+            }
+            if(ngBatDau.compareTo(ngKetThuc)<0) {
+                pk.setMaPhucKhao(1);
+                pk.setNgayBatDau(ngBatDau);
+                pk.setNgayKetThuc(ngKetThuc);
+                if (PhucKhaoDAO.themPhucKhao(pk) == true) {
+                    JOptionPane.showMessageDialog(rootPane, "Tạo phúc khảo điểm thành công");
+                }
+                else {
+                    JOptionPane.showMessageDialog(rootPane, "Tạo phúc khảo điểm thất bại");
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(rootPane, "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+            }
+            
+            
+//            pk.setMaPhucKhao(1);
+//            if(PhucKhaoDAO.themPhucKhao(pk)==true) {
+//                JOptionPane.showMessageDialog(rootPane, "Tạo phúc khảo điểm thành công");
+//            }
+//            else {
+//                JOptionPane.showMessageDialog(rootPane, "Tạo phúc khảo điểm thất bại");
+//            }
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCapNhatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -165,7 +224,7 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCapNhat;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -176,7 +235,7 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtBatDau;
+    private javax.swing.JTextField txtKetThuc;
     // End of variables declaration//GEN-END:variables
 }

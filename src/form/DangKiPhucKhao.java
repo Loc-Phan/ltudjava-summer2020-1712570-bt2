@@ -5,6 +5,14 @@
  */
 package form;
 
+import dao.Account;
+import dao.DiemDAO;
+import dao.ThoiKhoaBieuDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import pojo.Loptheomon;
+import pojo.Monhoc;
+
 /**
  *
  * @author Chen-Yang
@@ -14,7 +22,33 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
     /**
      * Creates new form DangKiPhucKhao
      */
+    Account temp;
     public DangKiPhucKhao() {
+        
+    }
+    public DangKiPhucKhao(Account acc) {
+        temp = new Account();
+        temp = acc;
+//        List<Loptheomon> ds = DiemDAO.layDachSachLopTheoMon();
+//        cbbMon.removeAllItems();
+//        Monhoc mh = new Monhoc();
+//        for(int i=0;i<ds.size();i++) {
+//            
+//            if(temp.getTenDN().compareTo(ds.get(i).getSinhvien().getMssv())==0) {
+//                mh = ThoiKhoaBieuDAO.layThongTinTKB(ds.get(i).getMonhoc().getMaMon());
+//                String tenMon = mh.getTenMon();
+//                String maMon = ds.get(i).getMonhoc().getMaMon();
+//                System.out.println(tenMon+"-"+maMon);
+//                if(mh==null) {
+//                    JOptionPane.showMessageDialog(rootPane, "Sinh viên này không học môn nào");
+//                }
+//                else {
+//                    cbbMon.addItem(tenMon+"-"+maMon);
+//                    cbbMon.setVisible(true); 
+//                }
+//            }
+//            
+//        }
         initComponents();
         setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
@@ -28,38 +62,21 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtDiemMM = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtLyDo = new javax.swing.JTextField();
+        cbbMon = new javax.swing.JComboBox<>();
+        cbbDiem = new javax.swing.JComboBox<>();
+        btnGui = new javax.swing.JButton();
+        btnLamMoi = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đăng ký phúc khảo");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel1.setText("MSSV:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 28, 91, 28));
-
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 28, 265, 28));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("Họ tên:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 69, 91, 28));
-
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 69, 265, 28));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Môn:");
@@ -73,35 +90,71 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
         jLabel5.setText("Điểm mong muốn");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 207, 158, 28));
 
-        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 207, 265, 28));
+        txtDiemMM.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        getContentPane().add(txtDiemMM, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 207, 265, 28));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Lý do:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 284, 91, 28));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 91, 28));
 
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 253, 265, 91));
+        txtLyDo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtLyDo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtLyDo.setInheritsPopupMenu(true);
+        txtLyDo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLyDoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtLyDo, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 253, 265, 60));
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 115, 265, 28));
+        cbbMon.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbMon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thiết kế giao diện-CTT011", "Kiểm chứng phần mềm-CTT012", "Lập trình ứng dụng Java-CTT001", "Mạng máy tính-CTT002" }));
+        cbbMon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbMonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbbMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 115, 265, 28));
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 161, 265, 28));
+        cbbDiem.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbDiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Điểm giữa kỳ", "Điểm cuối kỳ", "Điểm khác", "Điểm tổng" }));
+        getContentPane().add(cbbDiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 161, 265, 28));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Gửi");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 367, 73, -1));
+        btnGui.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnGui.setText("Gửi");
+        getContentPane().add(btnGui, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 73, -1));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton2.setText("Làm mới");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(297, 367, -1, -1));
+        btnLamMoi.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnLamMoi.setText("Làm mới");
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, -1, -1));
 
-        setSize(new java.awt.Dimension(506, 465));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("ĐĂNG KÍ PHÚC KHẢO");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 300, 40));
+
+        setSize(new java.awt.Dimension(506, 454));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        txtDiemMM.equals("");
+        txtLyDo.equals("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    private void txtLyDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLyDoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLyDoActionPerformed
+
+    private void cbbMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbMonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbMonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,19 +192,16 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnGui;
+    private javax.swing.JButton btnLamMoi;
+    private javax.swing.JComboBox<String> cbbDiem;
+    private javax.swing.JComboBox<String> cbbMon;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField txtDiemMM;
+    private javax.swing.JTextField txtLyDo;
     // End of variables declaration//GEN-END:variables
 }

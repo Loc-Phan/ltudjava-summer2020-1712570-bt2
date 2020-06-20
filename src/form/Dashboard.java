@@ -5,6 +5,7 @@
  */
 package form;
 import dao.Account;
+import dao.PhucKhaoDAO;
 import form.*;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -41,7 +42,14 @@ public class Dashboard extends javax.swing.JFrame {
             btnQLD.setEnabled(false);
             btnDSL.setEnabled(false);
             btnQLPK.setEnabled(false);
-            btnDKPK.setEnabled(false);
+            if (PhucKhaoDAO.layThongTinPhucKhao(1) == null) {
+                btnDKPK.setEnabled(false);
+            }
+            else if(PhucKhaoDAO.layThongTinPhucKhao(1) != null){
+                btnDKPK.setEnabled(true);
+                
+            }
+            
         }
     }
 
@@ -234,6 +242,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
         DoiMatKhau dmk = new DoiMatKhau(temp);
+        //System.out.println(temp.getTenDN());
         dmk.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDoiMKActionPerformed
@@ -263,7 +272,8 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXemDiemActionPerformed
 
     private void btnDKPKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDKPKActionPerformed
-        DangKiPhucKhao dk = new DangKiPhucKhao();
+        DangKiPhucKhao dk = new DangKiPhucKhao(temp);
+        System.out.println(temp.getTenDN());
         dk.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDKPKActionPerformed

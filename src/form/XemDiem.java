@@ -206,7 +206,7 @@ public class XemDiem extends javax.swing.JFrame {
             "STT","MSSV","Họ tên","Điểm GK","Điểm CK","Điểm khác","Điểm tổng","Tình trạng"
         });
         
-        int j;
+        int j=1;
         ArrayList arrRows = new ArrayList();
         //System.out.println(mon);
         for(int i=0;i<ds.size();i++) {
@@ -216,9 +216,9 @@ public class XemDiem extends javax.swing.JFrame {
                 
                 if(mon.contains(ds.get(i).getMonhoc().getMaMon())==true) {
                     //System.out.println("Vô được if nhỏ");
-                    j=i+1;
-                    arrRows.add(ds.get(i).getId());
-                    arrRows.add(j);
+                    arrRows.add(j++);
+                    //arrRows.add(ds.get(i).getId());
+                    
                     //Loptheomon sv = DiemDAO.layThongTinHocSinhLopTheoMon(ds.get(i).getSinhvien());
                     arrRows.add(ds.get(i).getSinhvien().getMssv());
                     Sinhvien sv = SinhVienDAO.layThongTinSinhVien(ds.get(i).getSinhvien().getMssv());
