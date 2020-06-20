@@ -406,13 +406,13 @@ public class QuanLySinhVien extends javax.swing.JFrame {
             "STT","MSSV","Họ tên","Giới tính","CMND"
         });
         
-        int j;
+        int j=1;
         ArrayList arrRows = new ArrayList();
         for(int i=0;i<ds.size();i++) {
             Sinhvien sv = ds.get(i);
             if(ds.get(i).getLophoc().getMaLop().compareTo(lop)==0) {
-                j=i+1;
-                arrRows.add(j);
+                //j=i+1;
+                arrRows.add(j++);
                 arrRows.add(sv.getMssv());
                 arrRows.add(sv.getHoTen());
                 arrRows.add(sv.getGioiTinh());
@@ -423,6 +423,9 @@ public class QuanLySinhVien extends javax.swing.JFrame {
             }
         }
         tbeSinhVien.setModel(model);
+        if(tbeSinhVien.getRowCount()==0) {
+            JOptionPane.showMessageDialog(rootPane,"Chưa có dữ liệu");
+        }
     }
     
     /**

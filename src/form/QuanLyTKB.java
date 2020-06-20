@@ -195,13 +195,13 @@ public class QuanLyTKB extends javax.swing.JFrame {
             try {
                 if(ThoiKhoaBieuDAO.themDanhSachTKB(filePath)==true) {
                     JOptionPane.showMessageDialog(rootPane, "Import thời khóa biểu thành công");
-//                    try {
-//                        //them mac dinh tat ca sv cua lop deu hoc mon nay
-//                        DiemDAO.themDanhSachLopTheoMon();
-//                        // TODO add your handling code here:
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(QuanLyTKB.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+                    try {
+                        //them mac dinh tat ca sv cua lop deu hoc mon nay
+                        DiemDAO.themDanhSachLopTheoMon();
+                        // TODO add your handling code here:
+                    } catch (IOException ex) {
+                        Logger.getLogger(QuanLyTKB.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 else if(ThoiKhoaBieuDAO.themDanhSachTKB(filePath)==false) {
                     JOptionPane.showMessageDialog(rootPane, "Thời khóa biểu này đã tồn tại");
@@ -244,6 +244,10 @@ public class QuanLyTKB extends javax.swing.JFrame {
             }
         }
         tbeTKB.setModel(model);
+        //tbeTKB.setModel(model);
+        if(tbeTKB.getRowCount()==0) {
+            JOptionPane.showMessageDialog(rootPane,"Chưa có dữ liệu");
+        }
     }
     /**
      * @param args the command line arguments

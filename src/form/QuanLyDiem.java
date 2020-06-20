@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.lang.String;
+import pojo.Lophoc;
 import pojo.Loptheomon;
 import pojo.Monhoc;
 import pojo.Sinhvien;
@@ -30,6 +31,10 @@ public class QuanLyDiem extends javax.swing.JFrame {
     String filePath;
     DefaultTableModel model;
     Loptheomon ltm;
+    //String id="";
+
+
+    
     /**
      * Creates new form QuanLyDiem
      */
@@ -51,12 +56,12 @@ public class QuanLyDiem extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        cbbLop = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
+        cbbSV = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        cbbMon = new javax.swing.JComboBox<>();
+        btnThem = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txtImport = new javax.swing.JTextField();
         btnChonFile = new javax.swing.JButton();
@@ -95,23 +100,43 @@ public class QuanLyDiem extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Lớp");
 
-        jComboBox5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbLop.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbLop.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "17HCB", "18HCB" }));
+        cbbLop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLopActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Sinh viên");
 
-        jComboBox6.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbSV.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbSV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn" }));
+        cbbSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbSVActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setText("Môn");
 
-        jComboBox7.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbMon.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbMon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thiết kế giao diện-CTT011", "Kiểm chứng phần mềm-CTT012", "Lập trình ứng dụng Java-CTT001", "Mạng máy tính-CTT002" }));
+        cbbMon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbMonActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton4.setText("Thêm");
+        btnThem.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -125,18 +150,18 @@ public class QuanLyDiem extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbbSV, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(cbbMon, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(170, 170, 170)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -145,17 +170,17 @@ public class QuanLyDiem extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbbSV, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbbMon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
         );
 
@@ -391,7 +416,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
         }
         else {
             
-            int id = (int) model.getValueAt(index,1);
+            String id = (String) model.getValueAt(index,1);
             ltm = DiemDAO.layThongTinLopTheoMon(id);
             CapNhatDiem cnd = new CapNhatDiem(ltm);
             cnd.setVisible(true);
@@ -403,18 +428,110 @@ public class QuanLyDiem extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuaDiemActionPerformed
 
     private void btnXoaSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSVActionPerformed
+        
+        
         int index = tbeDS.getSelectedRow();
         if(index==-1) {
             JOptionPane.showMessageDialog(rootPane,"Hãy chọn dòng cần xóa");
         }
         else {
-            
-            int id = (int) model.getValueAt(index,1);
-            DiemDAO.xoaLopTheoMon(id);
-            showResult();
+            int check = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa");
+            if(check==0) {
+                String id = (String) model.getValueAt(index,1);
+                DiemDAO.xoaLopTheoMon(id);
+                showResult(); 
+            }
+            else {
+                
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXoaSVActionPerformed
+
+    private void cbbSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSVActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbSVActionPerformed
+
+    private void cbbLopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLopActionPerformed
+        String lop = (String) cbbLop.getSelectedItem().toString();
+        
+        
+        //hien sv ra cbbSV
+        //String lop = (String) cbbLop.getSelectedItem().toString();
+        List<Sinhvien> dsSV = SinhVienDAO.layDachSachSinhVien();
+        //cbbMonDS = new JComboBox();
+        cbbSV.removeAllItems();
+        for(int i=0;i<dsSV.size();i++) {
+            
+            if(lop.compareTo(dsSV.get(i).getLophoc().getMaLop())==0) {
+                cbbSV.addItem(dsSV.get(i).getMssv()+"-"+dsSV.get(i).getHoTen());
+                //id cua loptheomon de de dang kt id trong dsLopTheoMon
+                
+                cbbSV.setVisible(true);
+            }
+            
+        }
+
+        
+//        List<Monhoc> dsMon = ThoiKhoaBieuDAO.layDachSachTKB();
+//        
+//        for(int i=0;i<dsMon.size();i++) {
+//            
+//            if(lop.compareTo(dsMon.get(i).getLophoc().getMaLop())==0) {
+//
+//            }
+//            
+//        }
+ 
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbLopActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        String lop = cbbLop.getSelectedItem().toString();
+        String[] sv = cbbSV.getSelectedItem().toString().split("-");
+        String mssv = sv[0];
+        String[] mon = cbbMon.getSelectedItem().toString().split("-");
+        String mamon = mon[1];
+        
+        String id = mssv+"-"+mamon;
+        
+        Lophoc lh = new Lophoc();
+        List<Monhoc> dsMaLop = ThoiKhoaBieuDAO.layDachSachTKB();
+        for(int i=0;i<dsMaLop.size();i++) {
+            if(dsMaLop.get(i).getMaMon().compareTo(mamon)==0) {
+                lh = dsMaLop.get(i).getLophoc();
+            }
+        }
+        String maLopTheoMon = lh.getMaLop()+"-"+mamon;
+        Monhoc mh = ThoiKhoaBieuDAO.layThongTinTKB(mamon);
+        Sinhvien sinhvien = SinhVienDAO.layThongTinSinhVien(mssv);
+        
+        Loptheomon lopTM = new Loptheomon();
+        lopTM.setId(id);
+        lopTM.setMaLopTheoMon(maLopTheoMon);
+        lopTM.setMonhoc(mh);
+        lopTM.setLophoc(lh);
+        lopTM.setSinhvien(sinhvien);
+        lopTM.setDiemGk(0);
+        lopTM.setDiemCk(0);
+        lopTM.setDiemKhac(0);
+        lopTM.setDiemTong(0);
+        
+        if(DiemDAO.themLopTheoMon(lopTM)==true) {
+            JOptionPane.showMessageDialog(rootPane, "Thêm sinh viên "+sinhvien.getHoTen()+" học môn "+mh.getTenMon()+" thành công");
+        }
+        else {
+            JOptionPane.showMessageDialog(rootPane, "Sinh viên "+sinhvien.getHoTen()+" đã học môn "+mh.getTenMon()+" này");
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void cbbMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbMonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbMonActionPerformed
 
     public void showResult() {
         String lop = (String) cbbLopDS.getSelectedItem().toString();
@@ -426,7 +543,7 @@ public class QuanLyDiem extends javax.swing.JFrame {
             "STT","ID","MSSV","Họ tên","Điểm GK","Điểm CK","Điểm khác","Điểm tổng","Tình trạng"
         });
         
-        int j;
+        int j=1;
         ArrayList arrRows = new ArrayList();
         //System.out.println(mon);
         for(int i=0;i<ds.size();i++) {
@@ -436,8 +553,8 @@ public class QuanLyDiem extends javax.swing.JFrame {
                 
                 if(mon.contains(ds.get(i).getMonhoc().getMaMon())==true) {
                     //System.out.println("Vô được if nhỏ");
-                    j=i+1;
-                    arrRows.add(j);
+                    
+                    arrRows.add(j++);
                     arrRows.add(ds.get(i).getId());
                     
                     //Loptheomon sv = DiemDAO.layThongTinHocSinhLopTheoMon(ds.get(i).getSinhvien());
@@ -461,6 +578,9 @@ public class QuanLyDiem extends javax.swing.JFrame {
             }
         }
         tbeDS.setModel(model);
+        if(tbeDS.getRowCount()==0) {
+            JOptionPane.showMessageDialog(rootPane,"Chưa có dữ liệu");
+        }
         
         //thong ke phan tram dau rot
         int row = model.getRowCount();
@@ -479,8 +599,12 @@ public class QuanLyDiem extends javax.swing.JFrame {
         txtTong.setText(rowTemp);
         txtDau.setText(String.valueOf(phanTramDau)+"%");
         txtRot.setText(String.valueOf(100-phanTramDau)+"%");
+        txtTong.setEnabled(false);
+        txtDau.setEnabled(false);
+        txtRot.setEnabled(false);
         txtTong.setVisible(true);
         txtDau.setVisible(true);
+        txtRot.setVisible(true);
     }
     
     /**
@@ -524,13 +648,13 @@ public class QuanLyDiem extends javax.swing.JFrame {
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnSuaDiem;
     private javax.swing.JButton btnTaiSV;
+    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoaSV;
+    private javax.swing.JComboBox<String> cbbLop;
     private javax.swing.JComboBox<String> cbbLopDS;
+    private javax.swing.JComboBox<String> cbbMon;
     private javax.swing.JComboBox<String> cbbMonDS;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
+    private javax.swing.JComboBox<String> cbbSV;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

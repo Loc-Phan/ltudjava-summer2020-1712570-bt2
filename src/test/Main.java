@@ -190,13 +190,14 @@ public class Main {
 
                 if(dsMonHoc.get(j).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
                     //System.out.println(i+ " Đúng rồi "+j);
-                    int id=1;
+                    //int id=1;
                     for(int k=0;k<dsSinhVien.size();k++) {
                         
                         Loptheomon ltm = new Loptheomon();
                         if(dsSinhVien.get(k).getLophoc().getMaLop().compareTo(dsLop.get(i).getMaLop())==0) {
                             //System.out.println(i+ " Đúng rồi "+j);
-                            ltm.setId(id++);
+                            String id = dsSinhVien.get(k).getMssv()+"-"+dsMonHoc.get(j).getMaMon();
+                            ltm.setId(id);
                             ltm.setMaLopTheoMon(dsLop.get(i).getMaLop()+"-"+dsMonHoc.get(j).getMaMon());
                             ltm.setMonhoc(dsMonHoc.get(j));
                             ltm.setLophoc(dsLop.get(i));

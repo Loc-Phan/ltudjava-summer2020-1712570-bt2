@@ -11,6 +11,7 @@ import dao.SinhVienDAO;
 import dao.ThoiKhoaBieuDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojo.Lophoc;
 import pojo.Loptheomon;
@@ -239,6 +240,9 @@ public class XemDiem extends javax.swing.JFrame {
             }
         }
         tbeDiem.setModel(model);
+       if(tbeDiem.getRowCount()==0) {
+            JOptionPane.showMessageDialog(rootPane,"Chưa có dữ liệu");
+        }
     }
     /**
      * @param args the command line arguments

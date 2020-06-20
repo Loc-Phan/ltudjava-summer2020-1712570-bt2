@@ -9,6 +9,7 @@ import dao.SinhVienDAO;
 import dao.ThoiKhoaBieuDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pojo.Lophoc;
 import pojo.Monhoc;
@@ -89,6 +90,9 @@ public class DanhSachLop extends javax.swing.JFrame {
                 arrRows.clear();
             }
         tbeDSLop.setModel(model);
+        if(tbeDSLop.getRowCount()==0) {
+            JOptionPane.showMessageDialog(rootPane,"Chưa có dữ liệu");
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXemActionPerformed
 

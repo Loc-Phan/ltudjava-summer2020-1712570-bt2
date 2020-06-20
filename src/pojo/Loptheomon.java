@@ -1,5 +1,5 @@
 package pojo;
-// Generated Jun 17, 2020 9:20:06 PM by Hibernate Tools 4.3.1
+// Generated Jun 20, 2020 8:26:29 AM by Hibernate Tools 4.3.1
 
 
 
@@ -9,7 +9,7 @@ package pojo;
 public class Loptheomon  implements java.io.Serializable {
 
 
-     private int id;
+     private String id;
      private Lophoc lophoc;
      private Monhoc monhoc;
      private Sinhvien sinhvien;
@@ -22,7 +22,7 @@ public class Loptheomon  implements java.io.Serializable {
     public Loptheomon() {
     }
 
-    public Loptheomon(int id, Lophoc lophoc, Monhoc monhoc, Sinhvien sinhvien, String maLopTheoMon, float diemGk, float diemCk, float diemKhac, float diemTong) {
+    public Loptheomon(String id, Lophoc lophoc, Monhoc monhoc, Sinhvien sinhvien, String maLopTheoMon, float diemGk, float diemCk, float diemKhac, float diemTong) {
        this.id = id;
        this.lophoc = lophoc;
        this.monhoc = monhoc;
@@ -34,11 +34,11 @@ public class Loptheomon  implements java.io.Serializable {
        this.diemTong = diemTong;
     }
    
-    public int getId() {
+    public String getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     public Lophoc getLophoc() {
