@@ -8,12 +8,14 @@ package form;
 import form.*;
 import dao.Account;
 import dao.AccountDAO;
+import dao.SinhVienDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import pojo.Sinhvien;
 
 /**
  *
@@ -188,14 +190,17 @@ public class DoiMatKhau extends javax.swing.JFrame {
                     
                     try {
                         List<Account> dsAccount_=AccountDAO.DocAccount(path_);
-                        
+                        Sinhvien svMK = new Sinhvien();
                         for(int i=0;i<dsAccount_.size();i++) {
                             if(accTemp.getTenDN().compareTo(dsAccount_.get(i).getTenDN())==0) {
                                 dsAccount_.get(i).setMatKhau(txtMatKhauMoi.getText());
+                                svMK = SinhVienDAO.layThongTinSinhVien(accTemp.getTenDN());
                             }
                             
                         }
                         if(AccountDAO.GhiAccount(path_, dsAccount_)==true) {
+                            svMK.setMatKhau(txtMatKhauMoi.getText());
+                            SinhVienDAO.capNhatThongTinSinhVien(svMK);
                             JOptionPane.showMessageDialog(rootPane,"Đổi mật khẩu thành công"); 
                         }
                         else {

@@ -5,11 +5,15 @@
  */
 package form;
 
-import dao.PhucKhaoDAO;
+import dao.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pojo.Chitietphuckhao;
 import pojo.Phuckhao;
 
 /**
@@ -17,7 +21,8 @@ import pojo.Phuckhao;
  * @author Chen-Yang
  */
 public class QuanlyPhucKhao extends javax.swing.JFrame {
-
+    DefaultTableModel model;
+    public static int index;
     /**
      * Creates new form QuanlyPhucKhao
      */
@@ -25,7 +30,7 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,11 +48,11 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
         txtKetThuc = new javax.swing.JTextField();
         btnCapNhat = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        cbbLoc = new javax.swing.JComboBox<>();
+        btnLoc = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        tbeXem = new javax.swing.JTable();
+        btnCapNhatTT = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý phúc khảo");
@@ -113,29 +118,48 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
         jLabel4.setText("Danh sách sinh viên phúc khảo:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 149, 251, 30));
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 149, 210, 30));
+        cbbLoc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Chưa xem", "Đã cập nhật điểm", "Không cập nhật điểm" }));
+        getContentPane().add(cbbLoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 149, 210, 30));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton2.setText("Lọc");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 150, 124, -1));
+        btnLoc.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnLoc.setText("Lọc");
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 150, 124, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbeXem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbeXem.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tbeXemAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tbeXem);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 1037, 157));
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton3.setText("Cập nhật trạng thái");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 193, -1));
+        btnCapNhatTT.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnCapNhatTT.setText("Cập nhật trạng thái");
+        btnCapNhatTT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatTTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCapNhatTT, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 193, -1));
 
         setSize(new java.awt.Dimension(1079, 508));
         setLocationRelativeTo(null);
@@ -160,15 +184,18 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
             } catch (ParseException pe) {
                 pe.printStackTrace();
             }
+            SimpleDateFormat ft = new SimpleDateFormat();
+            String[] batDau = ft.format(ngBatDau).toString().split("-");
+            String[] ketThuc = ft.format(ngKetThuc).toString().split("-");
             if(ngBatDau.compareTo(ngKetThuc)<0) {
-                pk.setMaPhucKhao(1);
+                pk.setMaPhucKhao(Integer.parseInt(batDau[0]+batDau[1]+batDau[2]+ketThuc[0]+ketThuc[1]+ketThuc[2]));
                 pk.setNgayBatDau(ngBatDau);
                 pk.setNgayKetThuc(ngKetThuc);
                 if (PhucKhaoDAO.themPhucKhao(pk) == true) {
                     JOptionPane.showMessageDialog(rootPane, "Tạo phúc khảo điểm thành công");
                 }
                 else {
-                    JOptionPane.showMessageDialog(rootPane, "Tạo phúc khảo điểm thất bại");
+                    JOptionPane.showMessageDialog(rootPane, "Tạo phúc khảo điểm thất bại vì đã tồn tại");
                 }
             }
             else {
@@ -188,6 +215,147 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
+    private void tbeXemAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbeXemAncestorAdded
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbeXemAncestorAdded
+
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        showResult();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLocActionPerformed
+
+    private void btnCapNhatTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatTTActionPerformed
+        index = tbeXem.getSelectedRow();
+        if(index==-1) {
+            JOptionPane.showMessageDialog(rootPane,"Hãy chọn dòng cần cập nhật");
+        }
+        else {
+            
+            CapNhatPhucKhao cnpk = new CapNhatPhucKhao(model,index);
+            cnpk.setVisible(true);
+
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCapNhatTTActionPerformed
+
+    public void showResult() {
+        String loc = (String) cbbLoc.getSelectedItem().toString();
+        List<Chitietphuckhao> ds = DangKiPhucKhaoDAO.layDachSachDangKiPhucKhao();
+        model = new DefaultTableModel();
+        int check_ = 0;
+        model.setColumnIdentifiers(new Object[]{
+            "STT", "MSSV", "Họ tên", "Môn", "Cột điểm phúc khảo", "Điểm mong muốn", "Lý do", "Tình trạng"
+        });
+        if (loc.compareTo("Tất cả") == 0) {
+            int j = 1;
+            ArrayList arrRows = new ArrayList();
+            if (ds.size() == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Chưa có dữ liệu");
+            }
+            for (int i = 0; i < ds.size(); i++) {
+                Chitietphuckhao ct = ds.get(i);
+                //j=i+1;
+                arrRows.add(j++);
+                arrRows.add(ct.getMssv());
+                arrRows.add(ct.getHoTen());
+                arrRows.add(ct.getMonhoc().getMaMon());
+                arrRows.add(ct.getCotDiem());
+                arrRows.add(ct.getDiemMongMuon());
+                arrRows.add(ct.getLyDo());
+                if (ct.getTrangThai() == 0) {
+                    arrRows.add("Chưa xem");
+                } else if (ct.getTrangThai() == 1) {
+                    arrRows.add("Đã cập nhật điểm");
+                } else if (ct.getTrangThai() == -1) {
+                    arrRows.add("Không cập nhật điểm");
+                }
+
+                model.addRow(arrRows.toArray());
+                arrRows.clear();
+            }
+
+            tbeXem.setModel(model);
+            if (tbeXem.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Chưa có dữ liệu");
+            }
+        } else if (loc.compareTo("Chưa xem") == 0) {
+            int j = 1;
+            ArrayList arrRows = new ArrayList();
+            for (int i = 0; i < ds.size(); i++) {
+                Chitietphuckhao ct = ds.get(i);
+                //j=i+1;
+                if (ct.getTrangThai() == 0) {
+                    arrRows.add(j++);
+                    arrRows.add(ct.getMssv());
+                    arrRows.add(ct.getHoTen());
+                    arrRows.add(ct.getMonhoc().getMaMon());
+                    arrRows.add(ct.getCotDiem());
+                    arrRows.add(ct.getDiemMongMuon());
+                    arrRows.add(ct.getLyDo());
+                    arrRows.add("Chưa xem");
+                }
+
+                model.addRow(arrRows.toArray());
+                arrRows.clear();
+            }
+
+            tbeXem.setModel(model);
+            if (tbeXem.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Chưa có dữ liệu");
+            }
+        } else if (loc.compareTo("Đã cập nhật điểm") == 0) {
+            int j = 1;
+            ArrayList arrRows = new ArrayList();
+            for (int i = 0; i < ds.size(); i++) {
+                Chitietphuckhao ct = ds.get(i);
+                //j=i+1;
+                if (ct.getTrangThai() == 1) {
+                    arrRows.add(j++);
+                    arrRows.add(ct.getMssv());
+                    arrRows.add(ct.getHoTen());
+                    arrRows.add(ct.getMonhoc().getMaMon());
+                    arrRows.add(ct.getCotDiem());
+                    arrRows.add(ct.getDiemMongMuon());
+                    arrRows.add(ct.getLyDo());
+                    arrRows.add("Đã cập nhật điểm");
+                }
+
+                model.addRow(arrRows.toArray());
+                arrRows.clear();
+            }
+            tbeXem.setModel(model);
+            if (tbeXem.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Chưa có dữ liệu");
+            }
+        } else if (loc.compareTo("Không cập nhật điểm") == 0) {
+            int j = 1;
+            ArrayList arrRows = new ArrayList();
+            for (int i = 0; i < ds.size(); i++) {
+                Chitietphuckhao ct = ds.get(i);
+                //j=i+1;
+                if (ct.getTrangThai() == -1) {
+                    arrRows.add(j++);
+                    arrRows.add(ct.getMssv());
+                    arrRows.add(ct.getHoTen());
+                    arrRows.add(ct.getMonhoc().getMaMon());
+                    arrRows.add(ct.getCotDiem());
+                    arrRows.add(ct.getDiemMongMuon());
+                    arrRows.add(ct.getLyDo());
+                    arrRows.add("Không cập nhật điểm");
+                }
+
+                model.addRow(arrRows.toArray());
+                arrRows.clear();
+            }
+            tbeXem.setModel(model);
+            if (tbeXem.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Chưa có dữ liệu");
+            }
+        }
+
+    }
     /**
      * @param args the command line arguments
      */
@@ -225,16 +393,16 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnCapNhatTT;
+    private javax.swing.JButton btnLoc;
+    private javax.swing.JComboBox<String> cbbLoc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbeXem;
     private javax.swing.JTextField txtBatDau;
     private javax.swing.JTextField txtKetThuc;
     // End of variables declaration//GEN-END:variables

@@ -273,7 +273,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnDKPKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDKPKActionPerformed
         DangKiPhucKhao dk = new DangKiPhucKhao(temp);
-        System.out.println(temp.getTenDN());
+        //System.out.println(temp.getTenDN());
         dk.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDKPKActionPerformed

@@ -6,12 +6,19 @@
 package form;
 
 import dao.Account;
+import dao.DangKiPhucKhaoDAO;
 import dao.DiemDAO;
+import dao.PhucKhaoDAO;
+import dao.SinhVienDAO;
 import dao.ThoiKhoaBieuDAO;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import pojo.Chitietphuckhao;
 import pojo.Loptheomon;
 import pojo.Monhoc;
+import pojo.Phuckhao;
 
 /**
  *
@@ -24,7 +31,8 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
      */
     Account temp;
     public DangKiPhucKhao() {
-        
+        initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
     }
     public DangKiPhucKhao(Account acc) {
         temp = new Account();
@@ -122,6 +130,11 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
 
         btnGui.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnGui.setText("Gửi");
+        btnGui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuiActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnGui, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 73, -1));
 
         btnLamMoi.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -143,8 +156,8 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        txtDiemMM.equals("");
-        txtLyDo.equals("");
+        txtDiemMM.setText("");
+        txtLyDo.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
@@ -155,6 +168,63 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
     private void cbbMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbMonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbbMonActionPerformed
+
+    private void btnGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiActionPerformed
+        if(txtDiemMM.getText().equals("") || txtLyDo.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane,"Bạn cần nhập đầy đủ thông tin");
+        }
+        else {
+            String[] tenMon = cbbMon.getSelectedItem().toString().split("-");
+            String maMon = tenMon[1];
+            String cotDiem = cbbDiem.getSelectedItem().toString();
+            String diemMM = txtDiemMM.getText();
+            String lyDo = txtLyDo.getText();
+            
+            List<Loptheomon> dsLTM = DiemDAO.layDachSachLopTheoMon();
+            String idLTM = temp.getTenDN()+"-"+maMon;
+            int check=0;
+            for(int i=0;i<dsLTM.size();i++) {
+                if(idLTM.compareTo(dsLTM.get(i).getId())==0) {
+                    check=1; //sv co hoc mon nay
+                }
+            }
+            if(check==0) {
+                JOptionPane.showMessageDialog(rootPane, "Sinh viên không học môn này");
+            }
+            else {
+                Date dNow = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+                List<Phuckhao> dsPK = PhucKhaoDAO.layDachSachPhucKhao();
+                Chitietphuckhao ctpk = new Chitietphuckhao();
+                
+                for (int i = 0; i < dsPK.size(); i++) {
+                    if (ft.format(dNow).compareTo(ft.format(dsPK.get(i).getNgayBatDau())) >= 0 && ft.format(dNow).compareTo(ft.format(dsPK.get(i).getNgayKetThuc())) <= 0) {
+                        int id = dsPK.get(i).getMaPhucKhao()+1;
+                        ctpk.setId(id++);
+                        ctpk.setPhuckhao(dsPK.get(i));
+                        ctpk.setMssv(temp.getTenDN());
+                        ctpk.setHoTen(SinhVienDAO.layThongTinSinhVien(temp.getTenDN()).getHoTen());
+                        ctpk.setMonhoc(ThoiKhoaBieuDAO.layThongTinTKB(maMon));
+                        ctpk.setCotDiem(cotDiem);
+                        ctpk.setDiemMongMuon(Float.parseFloat(diemMM));
+                        ctpk.setLyDo(lyDo);
+                        ctpk.setTrangThai(0);
+                        if (DangKiPhucKhaoDAO.themDangKiPhucKhao(ctpk) == true) {
+                            JOptionPane.showMessageDialog(rootPane, "Gửi đăng kí phúc khảo thành công");
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "Đăng kí phúc khảo không thành công");
+                        }
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(rootPane, "Đã hết hạn để đăng kí phúc khảo");
+                    }
+                }
+            }
+            
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuiActionPerformed
 
     /**
      * @param args the command line arguments

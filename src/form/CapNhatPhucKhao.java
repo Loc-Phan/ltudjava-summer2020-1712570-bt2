@@ -5,6 +5,14 @@
  */
 package form;
 
+import dao.DangKiPhucKhaoDAO;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pojo.Chitietphuckhao;
+
 /**
  *
  * @author Chen-Yang
@@ -14,6 +22,15 @@ public class CapNhatPhucKhao extends javax.swing.JFrame {
     /**
      * Creates new form CapNhatPhucKhao
      */
+    DefaultTableModel model_;
+    int index_;
+
+    public CapNhatPhucKhao(DefaultTableModel model, int index) {
+        index_ = index;
+        model_ = model;
+        initComponents();
+        setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
+    }
     public CapNhatPhucKhao() {
         initComponents();
         setDefaultCloseOperation(XemDiem.DISPOSE_ON_CLOSE);
@@ -28,98 +45,129 @@ public class CapNhatPhucKhao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        cbbTT = new javax.swing.JComboBox<>();
+        btnCN = new javax.swing.JButton();
+        btnHuy = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CẬP NHẬT TRẠNG THÁI PHÚC KHẢO");
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel1.setText("MSSV:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 31, 63, 26));
-
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 31, 269, -1));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("Họ tên:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 75, 63, 26));
-
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 75, 269, -1));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel3.setText("Môn:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 119, 63, 26));
-
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 119, 269, -1));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel4.setText("Cột điểm phúc khảo");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 163, 149, 26));
-
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 163, 269, -1));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel5.setText("Điểm mong muốn");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 207, 149, 26));
-
-        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 207, 269, -1));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel6.setText("Lý do:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 268, 63, 26));
-
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 251, 269, 61));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Tình trạng");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 330, 93, 26));
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 330, 269, 26));
+        cbbTT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbbTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chưa xem", "Đã cập nhật điểm", "Không cập nhật điểm" }));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Cập nhật");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 396, 105, -1));
+        btnCN.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnCN.setText("Cập nhật");
+        btnCN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCNActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton2.setText("Hủy");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 396, 70, -1));
+        btnHuy.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnHuy.setText("Hủy");
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
 
-        setSize(new java.awt.Dimension(563, 505));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel8.setText("CẬP NHẬT TRẠNG THÁI PHÚC KHẢO");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbbTT, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCN, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(58, 58, 58))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbTT, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHuy)
+                    .addComponent(btnCN))
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
+
+        setSize(new java.awt.Dimension(563, 273));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        close();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_btnHuyActionPerformed
 
+    private void btnCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCNActionPerformed
+        String trangthai = cbbTT.getSelectedItem().toString();
+        int checkTemp=0;
+        if(trangthai.compareTo("Chưa xem")==0) {
+            checkTemp=0;
+        }
+        else if(trangthai.compareTo("Đã cập nhật điểm")==0) {
+            checkTemp=1;
+        }
+        else if(trangthai.compareTo("Không cập nhật điểm")==0) {
+            checkTemp=-1;
+        }
+        
+        
+        
+        List<Chitietphuckhao> dsCtpk = DangKiPhucKhaoDAO.layDachSachDangKiPhucKhao();
+        String mssv = (String) model_.getValueAt(index_, 1);
+        String mon = (String) model_.getValueAt(index_, 3);
+        String diem = (String) model_.getValueAt(index_, 4);
+        Chitietphuckhao update = new Chitietphuckhao();
+        for (int i = 0; i < dsCtpk.size(); i++) {
+
+            if (mssv.compareTo(dsCtpk.get(i).getMssv()) == 0 && mon.compareTo(dsCtpk.get(i).getMonhoc().getMaMon()) == 0 && diem.compareTo(dsCtpk.get(i).getCotDiem()) == 0) {
+                update = dsCtpk.get(i);
+                update.setTrangThai(checkTemp);
+                if (DangKiPhucKhaoDAO.capNhatThongTinDKPK(update) == true) {
+                    JOptionPane.showMessageDialog(rootPane, "Cập nhật thành công");
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Cập nhật thất bại");
+                }
+            }
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCNActionPerformed
+    
+    public void close() {
+        WindowEvent windowEvent;
+        windowEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(windowEvent);
+                //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * @param args the command line arguments
      */
@@ -156,21 +204,10 @@ public class CapNhatPhucKhao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton btnCN;
+    private javax.swing.JButton btnHuy;
+    private javax.swing.JComboBox<String> cbbTT;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
 }
