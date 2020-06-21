@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
@@ -30,7 +31,7 @@ public class SinhVienDAO {
         BufferedReader br = null;
         try{
             fis = new FileInputStream(path);
-            isr = new InputStreamReader(fis);
+            isr = new InputStreamReader(fis,StandardCharsets.UTF_8);
             br = new BufferedReader(isr);
             int brr = br.read();
             String line = br.readLine();

@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
@@ -34,7 +35,7 @@ public class ThoiKhoaBieuDAO {
         BufferedReader br = null;
         try{
             fis = new FileInputStream(path);
-            isr = new InputStreamReader(fis);
+            isr = new InputStreamReader(fis,StandardCharsets.UTF_8);
             br = new BufferedReader(isr);
             int brr = br.read();
             String line = br.readLine();
@@ -49,6 +50,7 @@ public class ThoiKhoaBieuDAO {
                 mh.setMaMon(arr[1]);
                 mh.setTenMon(arr[2]);
                 mh.setPhongHoc(arr[3]);
+                
                 Lophoc lh = new Lophoc();
                 lh.setMaLop(lopHoc);
                 lh.setTenLop(lopHoc);

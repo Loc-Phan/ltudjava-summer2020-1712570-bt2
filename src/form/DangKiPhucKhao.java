@@ -188,18 +188,15 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
                     check=1; //sv co hoc mon nay
                 }
             }
-            if(check==0) {
-                JOptionPane.showMessageDialog(rootPane, "Sinh viên không học môn này");
-            }
-            else {
+            if (check == 1) {
                 Date dNow = new Date();
                 SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
                 List<Phuckhao> dsPK = PhucKhaoDAO.layDachSachPhucKhao();
                 Chitietphuckhao ctpk = new Chitietphuckhao();
-                
+                int checkHetHan = 0 ;
                 for (int i = 0; i < dsPK.size(); i++) {
                     if (ft.format(dNow).compareTo(ft.format(dsPK.get(i).getNgayBatDau())) >= 0 && ft.format(dNow).compareTo(ft.format(dsPK.get(i).getNgayKetThuc())) <= 0) {
-                        int id = dsPK.get(i).getMaPhucKhao()+1;
+                        int id = dsPK.get(i).getMaPhucKhao() + 1;
                         ctpk.setId(id++);
                         ctpk.setPhuckhao(dsPK.get(i));
                         ctpk.setMssv(temp.getTenDN());
@@ -209,16 +206,21 @@ public class DangKiPhucKhao extends javax.swing.JFrame {
                         ctpk.setDiemMongMuon(Float.parseFloat(diemMM));
                         ctpk.setLyDo(lyDo);
                         ctpk.setTrangThai(0);
-                        if (DangKiPhucKhaoDAO.themDangKiPhucKhao(ctpk) == true) {
-                            JOptionPane.showMessageDialog(rootPane, "Gửi đăng kí phúc khảo thành công");
-                        } else {
-                            JOptionPane.showMessageDialog(rootPane, "Đăng kí phúc khảo không thành công");
-                        }
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(rootPane, "Đã hết hạn để đăng kí phúc khảo");
-                    }
+                        check=1;
+                    } 
                 }
+                if(check==0) {
+                        JOptionPane.showMessageDialog(rootPane, "Đã hết hạn để đăng kí phúc khảo");
+                }
+                if (DangKiPhucKhaoDAO.themDangKiPhucKhao(ctpk) == true) {
+                    JOptionPane.showMessageDialog(rootPane, "Gửi đăng kí phúc khảo thành công");
+                } else if(DangKiPhucKhaoDAO.themDangKiPhucKhao(ctpk) == false){
+                    JOptionPane.showMessageDialog(rootPane, "Đăng kí phúc khảo không thành công");
+                }
+                
+            }
+            else {
+                JOptionPane.showMessageDialog(rootPane, "Sinh viên không học môn này");
             }
             
 

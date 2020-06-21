@@ -184,11 +184,14 @@ public class QuanlyPhucKhao extends javax.swing.JFrame {
             } catch (ParseException pe) {
                 pe.printStackTrace();
             }
-            SimpleDateFormat ft = new SimpleDateFormat();
+            SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
             String[] batDau = ft.format(ngBatDau).toString().split("-");
             String[] ketThuc = ft.format(ngKetThuc).toString().split("-");
+//            System.out.print(batDau[0]);
+//            System.out.print(batDau[1]);
+//            System.out.print(batDau[2]);
             if(ngBatDau.compareTo(ngKetThuc)<0) {
-                pk.setMaPhucKhao(Integer.parseInt(batDau[0]+batDau[1]+batDau[2]+ketThuc[0]+ketThuc[1]+ketThuc[2]));
+                pk.setMaPhucKhao((int) Long.parseLong(batDau[0]+batDau[1]+batDau[2]+ketThuc[0]+ketThuc[1]+ketThuc[2])); //chi can luu 1 nam vi dang ki phuc khao chi trong 1 thang
                 pk.setNgayBatDau(ngBatDau);
                 pk.setNgayKetThuc(ngKetThuc);
                 if (PhucKhaoDAO.themPhucKhao(pk) == true) {

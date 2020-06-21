@@ -42,10 +42,10 @@ public class Dashboard extends javax.swing.JFrame {
             btnQLD.setEnabled(false);
             btnDSL.setEnabled(false);
             btnQLPK.setEnabled(false);
-            if (PhucKhaoDAO.layThongTinPhucKhao(1) == null) {
+            if (PhucKhaoDAO.layDachSachPhucKhao() == null) {
                 btnDKPK.setEnabled(false);
             }
-            else if(PhucKhaoDAO.layThongTinPhucKhao(1) != null){
+            else if(PhucKhaoDAO.layDachSachPhucKhao() != null){
                 btnDKPK.setEnabled(true);
                 
             }

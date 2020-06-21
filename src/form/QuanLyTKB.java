@@ -34,11 +34,7 @@ public class QuanLyTKB extends javax.swing.JFrame {
     public QuanLyTKB() {
         initComponents();
         setDefaultCloseOperation(QuanLyTKB.DISPOSE_ON_CLOSE);
-        ds = (ArrayList<Monhoc>) ThoiKhoaBieuDAO.layDachSachTKB();
-        model = (DefaultTableModel) tbeTKB.getModel();
-        model.setColumnIdentifiers(new Object[] {
-            "STT","Mã môn","Tên môn","Phòng học"
-        });
+
     }
 
     /**
@@ -219,6 +215,12 @@ public class QuanLyTKB extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTaiActionPerformed
     public void showResult() {
+        ds = (ArrayList<Monhoc>) ThoiKhoaBieuDAO.layDachSachTKB();
+        model = (DefaultTableModel) tbeTKB.getModel();
+        model.setColumnIdentifiers(new Object[] {
+            "STT","Mã môn","Tên môn","Phòng học"
+        });
+        
         String lop = (String) cbbLop.getSelectedItem().toString();
         List<Monhoc> ds = (ArrayList<Monhoc>) ThoiKhoaBieuDAO.layDachSachTKB();
         DefaultTableModel model = new DefaultTableModel();

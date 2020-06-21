@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class AccountDAO {
         BufferedReader br = null;
         try{
             fis = new FileInputStream(path);
-            isr = new InputStreamReader(fis);
+            isr = new InputStreamReader(fis,StandardCharsets.UTF_8);
             br = new BufferedReader(isr);
             //int brr = br.read();
 

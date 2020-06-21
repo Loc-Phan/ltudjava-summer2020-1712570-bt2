@@ -1,3 +1,4 @@
+drop database if exists quanlysinhvien;
 CREATE DATABASE IF NOT EXISTS quanlysinhvien;
 USE quanlysinhvien;
 
@@ -34,7 +35,7 @@ CREATE TABLE lophoc(
 );
 
 CREATE TABLE loptheomon(
-	ID int not null primary key,
+	ID varchar(256) not null primary key,
     MaLopTheoMon varchar(255) NOT NULL,
     Mon varchar(255) NOT NULL,
     Lop varchar(255) NOT NULL,
